@@ -116,8 +116,14 @@ export class Cli {
 	/**
 	 * Add new positional argument
 	 */
-	arg(key: string, arg: Partial<StateArg>) {
-		this.state.args[key] = arg
+	arg(key: string, defaultArg?: string | number): this;
+	arg(key: string, arg?: Arg): this;
+	arg(key: string, argOrDefault?: Arg | string | number): this {
+		this.state.args[key] = parseOptions(argOrDefault, {
+			name: key,
+			key,
+			type: 'string'
+		}, 'default')
 		return this
 	}
 
