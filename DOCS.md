@@ -107,7 +107,7 @@ Add new actions. Will override existing.
 
 | Name | Type |
 | :------ | :------ |
-| `actions` | `StateActions` |
+| `actions` | `Actions` |
 
 #### Returns
 
@@ -117,7 +117,7 @@ ___
 
 ### arg
 
-▸ **arg**(`key`, `arg`): [`Cli`](Cli.md)
+▸ **arg**(`key`, `defaultArg?`): [`Cli`](Cli.md)
 
 Add new positional argument
 
@@ -126,7 +126,20 @@ Add new positional argument
 | Name | Type |
 | :------ | :------ |
 | `key` | `string` |
-| `arg` | `Partial`<`StateArg`\> |
+| `defaultArg?` | `string` \| `number` |
+
+#### Returns
+
+[`Cli`](Cli.md)
+
+▸ **arg**(`key`, `arg?`): [`Cli`](Cli.md)
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `key` | `string` |
+| `arg?` | `Arg` |
 
 #### Returns
 
@@ -144,7 +157,7 @@ Add new positional arguments. Will override existing.
 
 | Name | Type |
 | :------ | :------ |
-| `args` | `StateArgs` |
+| `args` | `Args` |
 
 #### Returns
 
@@ -271,7 +284,7 @@ Add a new flag/option
 | Name | Type |
 | :------ | :------ |
 | `key` | `string` |
-| `option` | `Partial`<`StateOption`\> |
+| `option` | `Partial`<`Option`\> |
 
 #### Returns
 
@@ -289,7 +302,7 @@ Add new flags/options. Will override existing.
 
 | Name | Type |
 | :------ | :------ |
-| `options` | `StateOptions` |
+| `options` | `Options` |
 
 #### Returns
 
