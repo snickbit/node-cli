@@ -1,5 +1,5 @@
-import {ActionDefinition, default_state, IObject, State, StateActions, StateArg, StateArgs, StateOption, StateOptions} from './config'
-import {arrayWrap, camelCase, isCallable, isNumber, isObject, kebabCase, objectClone, objectFindKey, typeOf} from '@snickbit/utilities'
+import {ActionDefinition, Actions, Arg, Args, default_state, IObject, Option, Options, State} from './config'
+import {arrayWrap, camelCase, isCallable, isNumber, isObject, kebabCase, objectClone, objectFindKey, parseOptions, typeOf} from '@snickbit/utilities'
 import {out, Out} from '@snickbit/out'
 import {chunkArguments, CliOption, CliOptions, default_options, extra_options, formatValue, hideBin, object_options, option_not_predicate, options_equal_predicate, parseDelimited} from './helpers'
 import parser from 'yargs-parser'
@@ -100,7 +100,7 @@ export class Cli {
 	/**
 	 * Add a new flag/option
 	 */
-	option(key: string, option: Partial<StateOption>) {
+	option(key: string, option: Partial<Option>) {
 		this.state.options[key] = option
 		return this
 	}
@@ -108,7 +108,7 @@ export class Cli {
 	/**
 	 * Add new flags/options. Will override existing.
 	 */
-	options(options: StateOptions) {
+	options(options: Options) {
 		Object.assign(this.state.options, options)
 		return this
 	}
@@ -124,7 +124,7 @@ export class Cli {
 	/**
 	 * Add new positional arguments. Will override existing.
 	 */
-	args(args: StateArgs) {
+	args(args: Args) {
 		Object.assign(this.state.args, args)
 		return this
 	}
@@ -158,7 +158,7 @@ export class Cli {
 	/**
 	 * Add new actions. Will override existing.
 	 */
-	actions(actions: StateActions) {
+	actions(actions: Actions) {
 		for (let [key, opt] of Object.entries(actions)) {
 			this.#addAction({
 				key,

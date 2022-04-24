@@ -1,29 +1,29 @@
 export type IObject = { [key: string]: any }
 
-export interface StateArgs {
-	[key: string]: Partial<StateArg>;
+export interface Args {
+	[key: string]: Partial<Arg>;
 }
 
-export interface StateArg {
+export interface Arg {
 	describe?: string;
 	description?: string;
-	choices: string[] | StateArgChoice[];
+	choices?: string[] | ArgChoice[];
 	type: string;
 	default: any;
-	delimited: boolean;
-	required: boolean;
+	delimited?: boolean;
+	required?: boolean;
 }
 
-export interface StateArgChoice {
+export interface ArgChoice {
 	name: string;
 	value: string | number;
 }
 
-export interface StateActions {
+export interface Actions {
 	help: (argv) => any
 }
 
-export interface StateAction {
+export interface Action {
 	[key: string]: Object | Function;
 }
 
@@ -35,11 +35,11 @@ export interface ActionDefinition {
 	method: (argv) => any;
 }
 
-export interface StateOptions {
-	[key: string]: Partial<StateOption>;
+export interface Options {
+	[key: string]: Partial<Option>;
 }
 
-export interface StateOption extends StateArg {
+export interface Option extends Arg {
 	alias: string | string[];
 }
 
@@ -52,9 +52,9 @@ export interface State {
 	bail: boolean;
 	cwd: string;
 	argv: string[];
-	args: Partial<StateArgs>;
-	actions: Partial<StateActions>;
-	options: Partial<StateOptions>;
+	args: Partial<Args>;
+	actions: Partial<Actions>;
+	options: Partial<Options>;
 }
 
 export const default_state: State = {
