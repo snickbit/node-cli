@@ -20,7 +20,9 @@ export interface ArgChoice {
 }
 
 export interface Actions {
-	help: (argv) => any
+	help?: (args: Args) => any
+
+	(args: Args): Promise<any> | any;
 }
 
 export interface Action {
