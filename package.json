@@ -28,7 +28,7 @@
 		"prod": "yarn build --minify",
 		"watch": "yarn build --watch",
 		"docs": "typedoc",
-		"release": "release-it"
+		"release": "release-it --ci"
 	},
 	"dependencies": {
 		"@snickbit/node-utilities": "^4.2.19",
