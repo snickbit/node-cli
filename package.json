@@ -3,6 +3,9 @@
 	"version": "1.0.26",
 	"description": "Simple Node.js CLI framework for creating command line applications.",
 	"license": "MIT",
+	"publishConfig": {
+		"access": "public"
+	},
 	"main": "./dist/index.js",
 	"module": "./dist/index.mjs",
 	"types": "./dist/index.d.ts",
