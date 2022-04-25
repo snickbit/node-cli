@@ -24,7 +24,8 @@
 		"build:meta": "yarn build --metafile",
 		"prod": "yarn build --minify",
 		"watch": "yarn build --watch",
-		"docs": "typedoc"
+		"docs": "typedoc",
+		"release": "release-it"
 	},
 	"dependencies": {
 		"@snickbit/node-utilities": "^4.2.19",
@@ -56,5 +57,10 @@
 			"esm",
 			"cjs"
 		]
+	},
+	"release-it": {
+		"git": {
+			"commitMessage": "chore: release v${version}"
+		}
 	}
 }
