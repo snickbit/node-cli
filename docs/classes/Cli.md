@@ -75,7 +75,7 @@ Add a new action
 
 | Name | Type |
 | :------ | :------ |
-| `action` | `ActionDefinition` |
+| `action` | `ActionDefinition` \| `Action` |
 
 #### Returns
 
@@ -320,7 +320,7 @@ Run the CLI program, parsing the argv, and running any defined actions
 
 | Name | Type |
 | :------ | :------ |
-| `callback?` | `Function` |
+| `callback?` | `Action` |
 
 #### Returns
 
