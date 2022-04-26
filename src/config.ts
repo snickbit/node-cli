@@ -19,23 +19,23 @@ export interface ArgChoice {
 	value: string | number;
 }
 
-export interface Actions {
-	help?: (args: Args) => any
-
-	(args: Args): Promise<any> | any;
-}
-
-export interface Action {
-	[key: string]: Object | Function;
-}
-
-export interface ActionDefinition {
+interface ActionBase {
 	key?: string;
 	name?: string;
 	describe?: string;
 	description?: string;
-	method: (argv) => any;
 }
+
+export interface Action extends ActionBase {
+	(args: Args): Promise<any> | any
+}
+
+export interface ActionDefinition extends ActionBase {
+	method?: (args: Args) => Promise<any> | any;
+}
+
+export type Actions = Record<string, ActionDefinition>
+
 
 export interface Options {
 	[key: string]: Partial<Option>;

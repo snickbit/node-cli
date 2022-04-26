@@ -112,9 +112,9 @@ export function unparse(args, opts) {
 }
 
 export function parseDelimited(value) {
-	let results = []
+	const results = []
 	if (Array.isArray(value)) {
-		for (let v of value) {
+		for (const v of value) {
 			results.push(...parseDelimited(v))
 		}
 	} else {
@@ -133,9 +133,9 @@ export function chunkArguments(args) {
 		return [args]
 	}
 
-	let chunks = []
+	const chunks = []
 	let chunk = []
-	for (let arg of args) {
+	for (const arg of args) {
 		if (arg === '--') {
 			chunks.push(chunk)
 			chunk = []
