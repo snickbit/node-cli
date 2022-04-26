@@ -3,10 +3,6 @@
 	"version": "1.0.32",
 	"description": "Simple Node.js CLI framework for creating command line applications.",
 	"license": "MIT",
-	"publishConfig": {
-		"registry": "https://registry.npmjs.org/",
-		"access": "public"
-	},
 	"main": "./dist/index.js",
 	"module": "./dist/index.mjs",
 	"types": "./dist/index.d.ts",
@@ -29,6 +25,7 @@
 		"prod": "yarn build --minify",
 		"watch": "yarn build --watch",
 		"docs": "typedoc",
+		"depcheck": "depcheck",
 		"release": "release-it --ci"
 	},
 	"dependencies": {
