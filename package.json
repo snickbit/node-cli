@@ -4,6 +4,7 @@
 	"description": "Simple Node.js CLI framework for creating command line applications.",
 	"license": "MIT",
 	"publishConfig": {
+		"registry": "https://registry.npmjs.org/",
 		"access": "public"
 	},
 	"main": "./dist/index.js",
