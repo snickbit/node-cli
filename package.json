@@ -21,12 +21,11 @@
 		"clean": "shx rm -rf ./dist",
 		"test": "jest",
 		"build": "tsup",
-		"build:meta": "yarpm run build --metafile",
-		"prod": "yarpm run build --minify",
-		"watch": "yarpm run build --watch",
+		"build:meta": "tsup --minify --metafile",
+		"prod": "tsup --minify",
+		"watch": "tsup --watch",
 		"docs": "typedoc",
-		"depcheck": "depcheck",
-		"release": "release-it --ci"
+		"depcheck": "depcheck"
 	},
 	"dependencies": {
 		"@snickbit/node-utilities": "^4.2.19",
@@ -58,13 +57,5 @@
 			"esm",
 			"cjs"
 		]
-	},
-	"release-it": {
-		"git": {
-			"commitMessage": "chore: release v${version}"
-		},
-		"npm": {
-			"skipChecks": true
-		}
 	}
 }
