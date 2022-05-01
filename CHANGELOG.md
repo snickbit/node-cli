@@ -1,5 +1,12 @@
 # @snickbit/node-cli
 
+## 1.0.39
+
+### Patch Changes
+
+- [f3b84ea](https://github.com/snickbit/node-cli/commit/f3b84ea) **chore**:  update dependencies
+
+
 ## 1.0.38
 
 ### Patch Changes
