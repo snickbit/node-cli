@@ -30,7 +30,7 @@
 	"dependencies": {
 		"@snickbit/node-utilities": "^4.2.30",
 		"@snickbit/out": "^2.0.17",
-		"@snickbit/utilities": "^3.0.4",
+		"@snickbit/utilities": "^3.0.14",
 		"yargs-parser": "^21.0.1"
 	},
 	"devDependencies": {
