@@ -88,6 +88,7 @@ export class Cli {
 	 */
 	async #runAction(args: IObject): Promise<any> {
 		const action = args.action
+		args._action = action
 		delete args.action
 		if (typeOf(action) !== 'string') {
 			this.out.fatal('Argument \'action\' must be a string.', args)
