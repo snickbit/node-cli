@@ -1,5 +1,22 @@
 # @snickbit/node-cli
 
+## 1.0.40
+
+### Patch Changes
+
+- [3f0eb10](https://github.com/snickbit/node-cli/commit/3f0eb10) **docs**:  update
+- [923470a](https://github.com/snickbit/node-cli/commit/923470a) **chore**:  update dependencies
+- [71ab8de](https://github.com/snickbit/node-cli/commit/71ab8de) **chore**:  update build config
+- [d8ddc21](https://github.com/snickbit/node-cli/commit/d8ddc21) **fix**:  adjust type definition
+- [b809b3d](https://github.com/snickbit/node-cli/commit/b809b3d) **build**:  update config
+- [49cd101](https://github.com/snickbit/node-cli/commit/49cd101) **refactor**:  cleanup
+- [1231219](https://github.com/snickbit/node-cli/commit/1231219) **fix**:  missing state.args
+- [afdb816](https://github.com/snickbit/node-cli/commit/afdb816) **feat**:  implement singleton, improve reparsing
+- [a0b6f5a](https://github.com/snickbit/node-cli/commit/a0b6f5a) **fix**:  replace out with scoped #out
+- [4a1930a](https://github.com/snickbit/node-cli/commit/4a1930a) **fix**:  throw on missing action instead of exiting process
+- [54cac36](https://github.com/snickbit/node-cli/commit/54cac36) **feat**:  set current action back to _action for internal use
+
+
 ## 1.0.39
 
 ### Patch Changes
