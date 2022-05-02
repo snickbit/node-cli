@@ -220,7 +220,7 @@ export class Cli {
 					overrides[key] = value
 				}
 			}
-		} else if (!isArray(argv)) {
+		} else if (!Array.isArray(argv)) {
 			this.#out.extra('type: ' + typeOf(argv), argv).fatal('Argument \'argv\' must be an array of strings.')
 		}
 
