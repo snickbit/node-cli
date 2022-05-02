@@ -54,6 +54,7 @@ export interface State {
 	bail: boolean;
 	cwd: string;
 	argv: string[];
+	parsed: IObject;
 	args: Partial<Args>;
 	actions: Partial<Actions>;
 	options: Partial<Options>;
@@ -68,6 +69,7 @@ export const default_state: State = {
 	bail: true,
 	cwd: process.cwd(),
 	argv: null,
+	parsed: {},
 
 	args: {},
 

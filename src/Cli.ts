@@ -1,5 +1,5 @@
 import {Action, ActionDefinition, Actions, Arg, Args, default_state, IObject, Option, Options, State} from './config'
-import {arrayWrap, camelCase, isCallable, isFunction, isNumber, isObject, kebabCase, objectClone, objectFindKey, parseOptions, typeOf} from '@snickbit/utilities'
+import {arrayWrap, camelCase, isCallable, isFunction, isNumber, isObject, isString, kebabCase, objectClone, objectFindKey, parseOptions, typeOf} from '@snickbit/utilities'
 import {Out} from '@snickbit/out'
 import {chunkArguments, CliOption, CliOptions, default_options, extra_options, formatValue, hideBin, object_options, option_not_predicate, options_equal_predicate, parseDelimited} from './helpers'
 import parser from 'yargs-parser'
@@ -9,6 +9,7 @@ import {fileExists, findUp, getFileJson} from '@snickbit/node-utilities'
  * Simple Node.js CLI framework for creating command line applications.
  */
 export class Cli {
+	private static _instance: Cli
 	#out: Out = new Out('node-cli')
 	#appPrefix: string
 	#appOut: Out
@@ -17,11 +18,25 @@ export class Cli {
 	/**
 	 * Create a new Cli instance.
 	 */
-	constructor(name?: string) {
-		this.state = objectClone(default_state) as State
-		if (name) {
-			this.name(name)
+	constructor(args?: IObject);
+	constructor(name?: string);
+	constructor(nameOrArgs?: string | IObject) {
+		let $cli: Cli
+
+		if (Cli._instance) {
+			$cli = Cli._instance
+		} else {
+			$cli = Cli._instance = this
+			$cli.state = objectClone(default_state) as State
 		}
+
+		if (isString(nameOrArgs)) {
+			$cli.name(nameOrArgs as string)
+		} else {
+			Object.assign($cli.state.parsed, nameOrArgs as IObject)
+		}
+
+		return $cli
 	}
 
 	get out() {
@@ -169,8 +184,8 @@ export class Cli {
 		let preparsed: IObject = {}
 		const overrides: IObject = {}
 
-		if (typeOf(argv) === 'object') {
-			preparsed = argv
+		if (!isEmpty(this.state.parsed)) {
+			preparsed = this.state.parsed
 			argv = []
 			if (preparsed._) {
 				argv.push(...preparsed._)
@@ -364,6 +379,8 @@ export class Cli {
 
 		this.#out.label('args').verbose(args)
 		this.#out.label('opts').verbose(opts)
+
+		this.state.parsed = args
 
 		return args
 	}
