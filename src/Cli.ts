@@ -1,5 +1,5 @@
 import {Action, ActionDefinition, Actions, Arg, Args, default_state, IObject, Option, Options, State} from './config'
-import {arrayWrap, camelCase, isCallable, isFunction, isNumber, isObject, isString, kebabCase, objectClone, objectFindKey, parseOptions, typeOf} from '@snickbit/utilities'
+import {arrayWrap, camelCase, isArray, isCallable, isEmpty, isFunction, isNumber, isObject, isString, kebabCase, objectClone, objectFindKey, parseOptions, typeOf} from '@snickbit/utilities'
 import {Out} from '@snickbit/out'
 import {chunkArguments, CliOption, CliOptions, default_options, extra_options, formatValue, hideBin, object_options, option_not_predicate, options_equal_predicate, parseDelimited} from './helpers'
 import parser from 'yargs-parser'
@@ -220,12 +220,12 @@ export class Cli {
 					overrides[key] = value
 				}
 			}
-		} else if (typeOf(argv) !== 'array') {
+		} else if (!isArray(argv)) {
 			this.#out.extra('type: ' + typeOf(argv), argv).fatal('Argument \'argv\' must be an array of strings.')
 		}
 
 		// check for explicitly set count options
-		if (Array.isArray(opts.count) && opts.count.length > 0) {
+		if (isArray(opts.count) && opts.count.length) {
 			for (const count of opts.count) {
 				const count_aliases = [
 					count,
@@ -236,7 +236,7 @@ export class Cli {
 				}
 
 				const count_args = argv.filter(options_equal_predicate(count_aliases))
-				if (count_args.length > 0) {
+				if (count_args.length) {
 					argv = argv.filter(option_not_predicate(count_aliases))
 					for (const count_arg of count_args) {
 						const [, count_arg_value] = count_arg.split('=')
