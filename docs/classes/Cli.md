@@ -37,9 +37,17 @@ Simple Node.js CLI framework for creating command line applications.
 
 ### constructor
 
-• **new Cli**(`name?`)
+• **new Cli**(`args?`)
 
 Create a new Cli instance.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `args?` | `IObject` |
+
+• **new Cli**(`name?`)
 
 #### Parameters
 
