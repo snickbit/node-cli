@@ -89,7 +89,11 @@ export class Cli {
 			} as ActionDefinition
 		}
 
-		if (!this.state.args.action) {
+		if (!this.state.args) {
+			this.state.args = {}
+		}
+
+		if (!this.state.args?.action) {
 			this.state.args.action = {
 				describe: 'Action to run',
 				type: 'string',
