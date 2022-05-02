@@ -30,11 +30,15 @@ export interface Action extends ActionBase {
 	(args: Args): Promise<any> | any
 }
 
+export interface ImportedAction extends ActionBase {
+	readonly default: Action
+}
+
 export interface ActionDefinition extends ActionBase {
 	method?: (args: Args) => Promise<any> | any;
 }
 
-export type Actions = Record<string, ActionDefinition>
+export type Actions = Record<string, ActionDefinition | Action | ImportedAction>
 
 
 export interface Options {
