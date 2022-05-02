@@ -1,6 +1,6 @@
 import {Action, ActionDefinition, Actions, Arg, Args, default_state, IObject, Option, Options, State} from './config'
 import {arrayWrap, camelCase, isCallable, isFunction, isNumber, isObject, kebabCase, objectClone, objectFindKey, parseOptions, typeOf} from '@snickbit/utilities'
-import {out, Out} from '@snickbit/out'
+import {Out} from '@snickbit/out'
 import {chunkArguments, CliOption, CliOptions, default_options, extra_options, formatValue, hideBin, object_options, option_not_predicate, options_equal_predicate, parseDelimited} from './helpers'
 import parser from 'yargs-parser'
 import {fileExists, findUp, getFileJson} from '@snickbit/node-utilities'
@@ -202,7 +202,7 @@ export class Cli {
 				}
 			}
 		} else if (typeOf(argv) !== 'array') {
-			out.extra('type: ' + typeOf(argv), argv).fatal('Argument \'argv\' must be an array of strings.')
+			this.#out.extra('type: ' + typeOf(argv), argv).fatal('Argument \'argv\' must be an array of strings.')
 		}
 
 		// check for explicitly set count options
@@ -296,7 +296,7 @@ export class Cli {
 		}
 
 		if (missing_required.length) {
-			out.fatal(`Missing required argument(s):`, missing_required.join(', '))
+			this.#out.fatal(`Missing required argument(s):`, missing_required.join(', '))
 		}
 
 		// get remaining positional options
