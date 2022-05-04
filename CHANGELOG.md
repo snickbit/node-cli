@@ -1,5 +1,15 @@
 # @snickbit/node-cli
 
+## 1.0.41
+
+### Patch Changes
+
+- [33a6e2e](https://github.com/snickbit/node-cli/commit/33a6e2e) **build**:  migrate to nx
+- [fa45f56](https://github.com/snickbit/node-cli/commit/fa45f56) **docs**:  update
+- [80bffbb](https://github.com/snickbit/node-cli/commit/80bffbb) **fix**:  don't throw on empty arrays
+- [8192fae](https://github.com/snickbit/node-cli/commit/8192fae) **chore**:  update dependencies
+
+
 ## 1.0.40
 
 ### Patch Changes
