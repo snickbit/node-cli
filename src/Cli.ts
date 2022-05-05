@@ -115,7 +115,7 @@ export class Cli {
 
 		const _action = this.state.actions[action]
 		if (!_action) {
-			this.out.throw(`Unknown action: ${action}`, 'Available actions:', Object.keys(this.state.actions).join(', '))
+			this.out.fatal(`Unknown action: ${action}`, 'Available actions:', Object.keys(this.state.actions).join(', '))
 		}
 
 		this.#out.debug('Running action: ' + action)
