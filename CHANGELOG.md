@@ -1,5 +1,14 @@
 # @snickbit/node-cli
 
+## 1.0.42
+
+### Patch Changes
+
+- [de4b7b2](https://github.com/snickbit/node-cli/commit/de4b7b2) **chore**(node-cli):  adjust output
+- [c366d1f](https://github.com/snickbit/node-cli/commit/c366d1f) **fix**(node-cli):  use fatal output for missing action to guarantee stoppage
+- [7b1911c](https://github.com/snickbit/node-cli/commit/7b1911c) **build**:  add dev watcher scripts with source maps
+
+
 ## 1.0.41
 
 ### Patch Changes
