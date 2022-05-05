@@ -124,7 +124,7 @@ export class Cli {
 		try {
 			const method = Cli.#getMethod(_action)
 			if (!method) {
-				this.#out.extra(_action).fatal(`Action ${action} does not have a default method`)
+				this.#out.extra(_action).fatal(`Action ${action} does not have a method`)
 			}
 
 			this.#cleanState()
