@@ -8,7 +8,6 @@
 - [c366d1f](https://github.com/snickbit/node-cli/commit/c366d1f) **fix**(node-cli):  use fatal output for missing action to guarantee stoppage
 - [7b1911c](https://github.com/snickbit/node-cli/commit/7b1911c) **build**:  add dev watcher scripts with source maps
 
-
 ## 1.0.41
 
 ### Patch Changes
@@ -17,7 +16,6 @@
 - [fa45f56](https://github.com/snickbit/node-cli/commit/fa45f56) **docs**:  update
 - [80bffbb](https://github.com/snickbit/node-cli/commit/80bffbb) **fix**:  don't throw on empty arrays
 - [8192fae](https://github.com/snickbit/node-cli/commit/8192fae) **chore**:  update dependencies
-
 
 ## 1.0.40
 
@@ -35,13 +33,11 @@
 - [4a1930a](https://github.com/snickbit/node-cli/commit/4a1930a) **fix**:  throw on missing action instead of exiting process
 - [54cac36](https://github.com/snickbit/node-cli/commit/54cac36) **feat**:  set current action back to _action for internal use
 
-
 ## 1.0.39
 
 ### Patch Changes
 
 - [f3b84ea](https://github.com/snickbit/node-cli/commit/f3b84ea) **chore**:  update dependencies
-
 
 ## 1.0.38
 
@@ -49,7 +45,6 @@
 
 - [5d950f8](https://github.com/snickbit/node-cli/commit/5d950f8) **chore**:  update build config
 - [35500b8](https://github.com/snickbit/node-cli/commit/35500b8) **chore**:  update build config
-
 
 ## 1.0.36
 
