@@ -1,5 +1,14 @@
 # @snickbit/node-cli
 
+## 1.0.43
+
+### Patch Changes
+
+- [c31879d](https://github.com/snickbit/node-cli/commit/c31879d) **chore**(dep):  update dependencies
+- [e95ba89](https://github.com/snickbit/node-cli/commit/e95ba89) **style**:  reformat
+- [9a5aad0](https://github.com/snickbit/node-cli/commit/9a5aad0) **chore**:  update dependencies
+
+
 ## 1.0.42
 
 ### Patch Changes
