@@ -26,6 +26,8 @@ interface ActionBase {
 	description?: string;
 }
 
+export type ActionFunction = ((...args: any[]) => Promise<any> | any) | {default: ActionFunction}
+
 export interface Action extends ActionBase {
 	(args: Args): Promise<any> | any
 }
@@ -35,11 +37,10 @@ export interface ImportedAction extends ActionBase {
 }
 
 export interface ActionDefinition extends ActionBase {
-	method?: (args: Args) => Promise<any> | any;
+	method?: ActionFunction
 }
 
-export type Actions = Record<string, ActionDefinition | Action | ImportedAction>
-
+export type Actions = Record<string, ActionDefinition | Action | ImportedAction | ActionFunction | any>
 
 export interface Options {
 	[key: string]: Partial<Option>;
