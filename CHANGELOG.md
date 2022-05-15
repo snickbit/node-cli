@@ -1,5 +1,12 @@
 # @snickbit/node-cli
 
+## 1.0.44
+
+### Patch Changes
+
+- [aa3e453](https://github.com/snickbit/node-cli/commit/aa3e453) **fix**:  expand action types
+- [88621bb](https://github.com/snickbit/node-cli/commit/88621bb) **chore**:  sort package.json
+
 ## 1.0.43
 
 ### Patch Changes
@@ -7,7 +14,6 @@
 - [c31879d](https://github.com/snickbit/node-cli/commit/c31879d) **chore**(dep):  update dependencies
 - [e95ba89](https://github.com/snickbit/node-cli/commit/e95ba89) **style**:  reformat
 - [9a5aad0](https://github.com/snickbit/node-cli/commit/9a5aad0) **chore**:  update dependencies
-
 
 ## 1.0.42
 
