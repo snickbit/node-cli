@@ -1,5 +1,11 @@
 # @snickbit/node-cli
 
+## 1.0.45
+
+### Patch Changes
+
+- [45f3a21](https://github.com/snickbit/node-cli/commit/45f3a21) **build**:  switch to pnpm for running
+
 ## 1.0.44
 
 ### Patch Changes
