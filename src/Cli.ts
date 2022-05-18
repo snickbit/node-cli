@@ -9,11 +9,12 @@ import {fileExists, findUp, getFileJson} from '@snickbit/node-utilities'
  * Simple Node.js CLI framework for creating command line applications.
  */
 export class Cli {
-	private static _instance: Cli
 	#out: Out = new Out('node-cli')
 	#appPrefix: string
 	#appOut: Out
 	state: State
+	private static _instance: Cli
+
 
 	/**
 	 * Create a new Cli instance.
@@ -39,10 +40,6 @@ export class Cli {
 		return $cli
 	}
 
-	get out() {
-		return this.#appOut || this.#out
-	}
-
 	static #getMethod(opts) {
 		let method
 		if (isCallable(opts, true)) {
@@ -61,6 +58,11 @@ export class Cli {
 
 	static #taskName(opts, parent) {
 		return opts.name || [(parent || ''), (opts.key || '')].filter(Boolean).join(':')
+	}
+
+
+	get out() {
+		return this.#appOut || this.#out
 	}
 
 	#addAction(action: ActionDefinition, parent = null) {
@@ -98,44 +100,6 @@ export class Cli {
 				describe: 'Action to run',
 				type: 'string',
 				choices: Object.keys(this.state.actions)
-			}
-		}
-	}
-
-	/**
-	 * Run an action defined in the CLI program
-	 */
-	async #runAction(args: IObject): Promise<any> {
-		const action = args.action
-		args._action = action
-		delete args.action
-		if (typeOf(action) !== 'string') {
-			this.out.fatal('Argument \'action\' must be a string.', args)
-		}
-
-		const _action = this.state.actions[action]
-		if (!_action) {
-			this.out.fatal(`Unknown action: ${action}`, 'Available actions:', Object.keys(this.state.actions).join(', '))
-		}
-
-		this.#out.debug('Running action: ' + action)
-		this.#setOutName(action)
-
-		try {
-			const method = Cli.#getMethod(_action)
-			if (!method) {
-				this.#out.extra(_action).fatal(`Action ${action} does not have a method`)
-			}
-
-			this.#cleanState()
-
-			return await method(args)
-		} catch (e) {
-			if (this.state.bail) {
-				this.out.fatal(`Action ${action} failed`, e)
-			} else {
-				this.out.error(`Action ${action} failed`, e)
-				return false
 			}
 		}
 	}
@@ -181,6 +145,196 @@ export class Cli {
 		}
 		return opts
 	}
+
+	#setOutName(name: string) {
+		this.#appPrefix = (this.#appPrefix ? this.#appPrefix + ':' : '') + name
+		this.#appOut = new Out(`[${this.#appPrefix}]`, {verbosity: 0})
+		return this.#appOut
+	}
+
+	#cleanState() {
+		this.state = objectClone(default_state) as State
+	}
+
+	/**
+	 * Set the name of the application
+	 */
+	name(name: string) {
+		this.state.name = name
+		this.#setOutName(name)
+		return this
+	}
+
+	/**
+	 * Set the version of the application
+	 */
+	version(version: string | number) {
+		this.state.version = version
+		return this
+	}
+
+	/**
+	 * Set the description / banner message of the application
+	 */
+	banner(message: string) {
+		this.state.banner = message
+		return this
+	}
+
+	/**
+	 * Hide the banner message
+	 */
+	hideBanner(value = true) {
+		this.state.hide_banner = value !== false
+		return this
+	}
+
+	/**
+	 * Attempt to pull the name and version from the closest package.json file to the current working directory.
+	 */
+	includeWorkingPackage(value = true) {
+		this.state.include_working_package = value !== false
+		return this
+	}
+
+	/**
+	 * Don't kill the process on error
+	 */
+	noBail(value = false) {
+		this.state.bail = value !== true
+		return this
+	}
+
+	/**
+	 * Add a new flag/option
+	 */
+	option(key: string, option: Partial<Option>) {
+		this.state.options[key] = option
+		return this
+	}
+
+	/**
+	 * Add new flags/options. Will override existing.
+	 */
+	options(options: Options) {
+		Object.assign(this.state.options, options)
+		return this
+	}
+
+	/**
+	 * Add new positional argument
+	 */
+	arg(key: string, defaultArg?: string | number): this;
+	arg(key: string, arg?: Arg): this;
+	arg(key: string, argOrDefault?: Arg | string | number): this {
+		this.state.args[key] = parseOptions(argOrDefault, {
+			name: key,
+			key,
+			type: 'string'
+		}, 'default')
+		return this
+	}
+
+	/**
+	 * Add new positional arguments. Will override existing.
+	 */
+	args(args: Args) {
+		Object.assign(this.state.args, args)
+		return this
+	}
+
+	/**
+	 * Add a new action
+	 */
+	action(action: Action | ActionDefinition): this;
+	action(name, description, method): this;
+	action(nameOrAction: string | Action | ActionDefinition, description?: string, method?: Action): this {
+		if (isFunction(nameOrAction)) {
+			const action = nameOrAction as Action
+			this.#addAction({
+				key: action?.key || action?.name,
+				method: action
+			})
+		} else if (isObject(nameOrAction)) {
+			const action = nameOrAction as ActionDefinition
+
+			this.#addAction({
+				key: action.key || action.name,
+				...action
+			})
+		} else {
+			const name = nameOrAction as string
+			this.#addAction({
+				key: name,
+				name,
+				description,
+				method
+			})
+		}
+		return this
+	}
+
+	/**
+	 * Add new actions. Will override existing.
+	 */
+	actions(actions: Actions) {
+		for (const [key, action] of Object.entries(actions)) {
+			this.#addAction({
+				key,
+				...action
+			})
+		}
+		return this
+	}
+
+	/**
+	 * Set the default action
+	 */
+	defaultAction(name: string) {
+		if (this.state.args?.action) {
+			this.state.args.action.default = name
+		}
+		return this
+	}
+
+	/**
+	 * Run an action defined in the CLI program
+	 */
+	async #runAction(args: IObject): Promise<any> {
+		const action = args.action
+		args._action = action
+		delete args.action
+		if (typeOf(action) !== 'string') {
+			this.out.fatal('Argument \'action\' must be a string.', args)
+		}
+
+		const _action = this.state.actions[action]
+		if (!_action) {
+			this.out.fatal(`Unknown action: ${action}`, 'Available actions:', Object.keys(this.state.actions).join(', '))
+		}
+
+		this.#out.debug('Running action: ' + action)
+		this.#setOutName(action)
+
+		try {
+			const method = Cli.#getMethod(_action)
+			if (!method) {
+				this.#out.extra(_action).fatal(`Action ${action} does not have a method`)
+			}
+
+			this.#cleanState()
+
+			return await method(args)
+		} catch (e) {
+			if (this.state.bail) {
+				this.out.fatal(`Action ${action} failed`, e)
+			} else {
+				this.out.error(`Action ${action} failed`, e)
+				return false
+			}
+		}
+	}
+
 
 	async #parseArgs(): Promise<IObject> {
 		let argv: any[] = this.state.argv || hideBin(process.argv)
@@ -387,161 +541,6 @@ export class Cli {
 		this.state.parsed = args
 
 		return args
-	}
-
-	#setOutName(name: string) {
-		this.#appPrefix = (this.#appPrefix ? this.#appPrefix + ':' : '') + name
-		this.#appOut = new Out(`[${this.#appPrefix}]`, {verbosity: 0})
-		return this.#appOut
-	}
-
-	#cleanState() {
-		this.state = objectClone(default_state) as State
-	}
-
-	/**
-	 * Set the name of the application
-	 */
-	name(name: string) {
-		this.state.name = name
-		this.#setOutName(name)
-		return this
-	}
-
-	/**
-	 * Set the version of the application
-	 */
-	version(version: string | number) {
-		this.state.version = version
-		return this
-	}
-
-	/**
-	 * Set the description / banner message of the application
-	 */
-	banner(message: string) {
-		this.state.banner = message
-		return this
-	}
-
-	/**
-	 * Hide the banner message
-	 */
-	hideBanner(value = true) {
-		this.state.hide_banner = value !== false
-		return this
-	}
-
-	/**
-	 * Attempt to pull the name and version from the closest package.json file to the current working directory.
-	 */
-	includeWorkingPackage(value = true) {
-		this.state.include_working_package = value !== false
-		return this
-	}
-
-	/**
-	 * Don't kill the process on error
-	 */
-	noBail(value = false) {
-		this.state.bail = value !== true
-		return this
-	}
-
-	/**
-	 * Add a new flag/option
-	 */
-	option(key: string, option: Partial<Option>) {
-		this.state.options[key] = option
-		return this
-	}
-
-	/**
-	 * Add new flags/options. Will override existing.
-	 */
-	options(options: Options) {
-		Object.assign(this.state.options, options)
-		return this
-	}
-
-	/**
-	 * Add new positional argument
-	 */
-	arg(key: string, defaultArg?: string | number): this;
-
-	arg(key: string, arg?: Arg): this;
-
-	arg(key: string, argOrDefault?: Arg | string | number): this {
-		this.state.args[key] = parseOptions(argOrDefault, {
-			name: key,
-			key,
-			type: 'string'
-		}, 'default')
-		return this
-	}
-
-	/**
-	 * Add new positional arguments. Will override existing.
-	 */
-	args(args: Args) {
-		Object.assign(this.state.args, args)
-		return this
-	}
-
-	/**
-	 * Add a new action
-	 */
-	action(action: Action | ActionDefinition): this;
-
-	action(name, description, method): this;
-
-	action(nameOrAction: string | Action | ActionDefinition, description?: string, method?: Action): this {
-		if (isFunction(nameOrAction)) {
-			const action = nameOrAction as Action
-			this.#addAction({
-				key: action?.key || action?.name,
-				method: action
-			})
-		} else if (isObject(nameOrAction)) {
-			const action = nameOrAction as ActionDefinition
-
-			this.#addAction({
-				key: action.key || action.name,
-				...action
-			})
-		} else {
-			const name = nameOrAction as string
-			this.#addAction({
-				key: name,
-				name,
-				description,
-				method
-			})
-		}
-		return this
-	}
-
-	/**
-	 * Add new actions. Will override existing.
-	 */
-	actions(actions: Actions) {
-		for (const [key, action] of Object.entries(actions)) {
-			this.#addAction({
-				key,
-				...action
-			})
-		}
-		return this
-	}
-
-	/**
-	 * Set the default action
-	 */
-	defaultAction(name: string) {
-		if (this.state.args?.action) {
-			this.state.args.action.default = name
-		}
-		return this
 	}
 
 	/**
