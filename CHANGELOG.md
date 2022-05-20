@@ -1,5 +1,11 @@
 # @snickbit/node-cli
 
+## 1.0.48
+
+### Patch Changes
+
+- [2f980fb](https://github.com/snickbit/node-cli/commit/2f980fb) **fix**:  remove duplicate code
+
 ## 1.0.46
 
 ### Patch Changes
