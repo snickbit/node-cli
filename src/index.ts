@@ -6,12 +6,8 @@ import {IObject} from './config'
  */
 export function cli(args?: IObject): Cli;
 export function cli(name?: string): Cli;
-export function cli(nameOrArgs?: string | IObject): Cli {
-	if (typeof nameOrArgs === 'string') {
-		return new Cli(nameOrArgs)
-	} else {
-		return new Cli(nameOrArgs)
-	}
+export function cli(nameOrArgs?: any): Cli {
+	return new Cli(nameOrArgs)
 }
 
 export {Cli} from './Cli'
