@@ -31,6 +31,8 @@ Simple Node.js CLI framework for creating command line applications.
 - [option](Cli.md#option)
 - [options](Cli.md#options)
 - [run](Cli.md#run)
+- [showHelp](Cli.md#showhelp)
+- [showVersion](Cli.md#showversion)
 - [version](Cli.md#version)
 
 ## Constructors
@@ -333,6 +335,30 @@ Run the CLI program, parsing the argv, and running any defined actions
 #### Returns
 
 `Promise`<`any`\>
+
+___
+
+### showHelp
+
+▸ **showHelp**(): `void`
+
+Show the help message
+
+#### Returns
+
+`void`
+
+___
+
+### showVersion
+
+▸ **showVersion**(): `void`
+
+Show the version message
+
+#### Returns
+
+`void`
 
 ___
 
