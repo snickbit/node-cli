@@ -75,42 +75,6 @@ export const extra_options = [
 	'delimited'
 ]
 
-/**
- * Reverts the args/options back into an argv array
- * @param args
- * @param opts
- * @return {any[]}
- * @deprecated
- */
-export function unparse(args, opts) {
-	const argv = []
-
-	for (let [key, value] of Object.entries(argv)) {
-		let parsed_key = key
-		if (key === '--') {
-			parsed_key = '--'
-		} else if (key !== '_') {
-			parsed_key = `--${key}`
-		}
-
-		if (opts.boolean.includes(key)) {
-			value = value ? key : ''
-		} else if (!opts.count || !opts.count.includes(key)) {
-			if (!Array.isArray(value)) {
-				value = arrayWrap(value)
-			}
-		} else if (isNumber(value) && value > 0) {
-			value = `${parsed_key} `.repeat(parseInt(value)).split(' ')
-		} else {
-			continue
-		}
-
-		argv.push(...value)
-	}
-
-	return argv.filter(arg => arg !== '')
-}
-
 export function parseDelimited(value) {
 	const results = []
 	if (Array.isArray(value)) {
