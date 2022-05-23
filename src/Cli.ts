@@ -297,6 +297,9 @@ export class Cli {
 		return this
 	}
 
+	/**
+	 * Show the help message
+	 */
 	showHelp() {
 		printLine()
 
