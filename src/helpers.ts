@@ -111,6 +111,7 @@ export function chunkArguments(args) {
 	return chunks
 }
 
+/** @internal */
 export function formatValue(value: any, type?: string) {
 	switch (type) {
 		case 'boolean':
