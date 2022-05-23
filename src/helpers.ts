@@ -133,3 +133,12 @@ export function formatValue(value: any, type?: string) {
 			}
 	}
 }
+
+/** @internal */
+export const space = (spaces = 1) => '   '.repeat(spaces)
+
+/** @internal */
+export const helpOut = (output: string, spaces = 1) => console.log(space(spaces) + output)
+
+/** @internal */
+export const printLine = (count = 1) => console.log('\n'.repeat(count - 1 < 0 ? 0 : count - 1))

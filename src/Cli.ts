@@ -1,7 +1,7 @@
 import {Action, ActionDefinition, Actions, Arg, Args, default_state, IObject, Option, Options, State} from './config'
 import {arrayWrap, camelCase, isArray, isCallable, isEmpty, isFunction, isNumber, isObject, isString, kebabCase, objectClone, objectFindKey, parseOptions, typeOf} from '@snickbit/utilities'
 import {Out} from '@snickbit/out'
-import {chunkArguments, CliOption, CliOptions, default_options, extra_options, formatValue, hideBin, object_options, option_not_predicate, options_equal_predicate, parseDelimited} from './helpers'
+import {chunkArguments, CliOption, CliOptions, default_options, extra_options, formatValue, helpOut, hideBin, object_options, option_not_predicate, options_equal_predicate, parseDelimited, printLine, space} from './helpers'
 import parser from 'yargs-parser'
 import {fileExists, findUp, getFileJson} from '@snickbit/node-utilities'
 
@@ -298,15 +298,11 @@ export class Cli {
 	}
 
 	showHelp() {
-		const space = (spaces = 1) => '   '.repeat(spaces)
-		const helpOut = (output: string, spaces = 1) => console.log(space(spaces) + output)
-		const line = (count = 1) => console.log('\n'.repeat(count - 1 < 0 ? 0 : count - 1))
-
-		line()
+		printLine()
 
 		helpOut('Usage: ' + this.#appPrefix + ' [command] [options] [arguments]')
 
-		line()
+		printLine()
 
 		if (!isEmpty(this.state.options)) {
 			helpOut('Options:')
@@ -319,7 +315,7 @@ export class Cli {
 				helpOut(output)
 			}
 
-			line()
+			printLine()
 		}
 
 		if (!isEmpty(this.state.args)) {
@@ -332,7 +328,7 @@ export class Cli {
 				helpOut(output)
 			}
 
-			line()
+			printLine()
 		}
 
 		if (!isEmpty(this.state.actions)) {
@@ -345,7 +341,7 @@ export class Cli {
 				helpOut(output)
 			}
 
-			line()
+			printLine()
 		}
 	}
 
