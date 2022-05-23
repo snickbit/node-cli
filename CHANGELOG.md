@@ -1,5 +1,17 @@
 # @snickbit/node-cli
 
+## 1.0.49
+
+### Patch Changes
+
+- [692f932](https://github.com/snickbit/node-cli/commit/692f932) **docs**:  update
+- [0c9d018](https://github.com/snickbit/node-cli/commit/0c9d018) **feat**:  add version option and showVersion method
+- [6235f0a](https://github.com/snickbit/node-cli/commit/6235f0a) **docs**:  add description to showHelp
+- [62bfd42](https://github.com/snickbit/node-cli/commit/62bfd42) **chore**:  add internal flag to formatValue
+- [17013b8](https://github.com/snickbit/node-cli/commit/17013b8) **refactor**:  move render helpers to helpers file
+- [551db83](https://github.com/snickbit/node-cli/commit/551db83) **fix**:  remove deprecated unparse function
+- [0eef40b](https://github.com/snickbit/node-cli/commit/0eef40b) **feat**:  add basic help option
+
 ## 1.0.48
 
 ### Patch Changes
