@@ -110,6 +110,11 @@ export const default_state: State = {
 			describe: 'Show help',
 			type: 'boolean',
 			default: false
+		},
+		version: {
+			describe: 'Show version',
+			type: 'boolean',
+			default: false
 		}
 	}
 }

@@ -349,6 +349,13 @@ export class Cli {
 	}
 
 	/**
+	 * Show the version message
+	 */
+	showVersion() {
+		if (this.state.version) console.log(`v${this.state.version}`)
+	}
+
+	/**
 	 * Run an action defined in the CLI program
 	 */
 	async #runAction(args: IObject): Promise<any> {
@@ -602,6 +609,8 @@ export class Cli {
 		if (this.state.actions && Object.keys(this.state.actions).length && args.action) {
 			this.#out.debug('Found action and action definitions, running action')
 			return this.#runAction(args)
+		} else if (args.version) {
+			return this.showVersion()
 		} else if (args.help) {
 			return this.showHelp()
 		} else if (callback) {
