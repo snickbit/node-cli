@@ -297,6 +297,58 @@ export class Cli {
 		return this
 	}
 
+	showHelp() {
+		const space = (spaces = 1) => '   '.repeat(spaces)
+		const helpOut = (output: string, spaces = 1) => console.log(space(spaces) + output)
+		const line = (count = 1) => console.log('\n'.repeat(count - 1 < 0 ? 0 : count - 1))
+
+		line()
+
+		helpOut('Usage: ' + this.#appPrefix + ' [command] [options] [arguments]')
+
+		line()
+
+		if (!isEmpty(this.state.options)) {
+			helpOut('Options:')
+			for (let [name, item] of Object.entries(this.state.options)) {
+				let output = space() + '--' + name
+				if (item.alias) output += `, -${item.alias}`
+				if (item.description) {
+					output += space(2) + item.description
+				}
+				helpOut(output)
+			}
+
+			line()
+		}
+
+		if (!isEmpty(this.state.args)) {
+			helpOut('Arguments:')
+			for (let [name, item] of Object.entries(this.state.args)) {
+				let output = space() + name
+				if (item.description) {
+					output += space(2) + item.description
+				}
+				helpOut(output)
+			}
+
+			line()
+		}
+
+		if (!isEmpty(this.state.actions)) {
+			helpOut('Actions:')
+			for (let [name, item] of Object.entries(this.state.actions)) {
+				let output = space() + name
+				if (item.description) {
+					output += space(2) + item.description
+				}
+				helpOut(output)
+			}
+
+			line()
+		}
+	}
+
 	/**
 	 * Run an action defined in the CLI program
 	 */
@@ -334,7 +386,6 @@ export class Cli {
 			}
 		}
 	}
-
 
 	async #parseArgs(): Promise<IObject> {
 		let argv: any[] = this.state.argv || hideBin(process.argv)
@@ -552,6 +603,8 @@ export class Cli {
 		if (this.state.actions && Object.keys(this.state.actions).length && args.action) {
 			this.#out.debug('Found action and action definitions, running action')
 			return this.#runAction(args)
+		} else if (args.help) {
+			return this.showHelp()
 		} else if (callback) {
 			this.#out.debug('Sending args to callback')
 			this.#cleanState()
