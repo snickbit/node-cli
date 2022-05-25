@@ -85,7 +85,7 @@ Add a new action
 
 | Name | Type |
 | :------ | :------ |
-| `action` | `ActionDefinition` \| `Action` |
+| `action` | `Action` \| `ActionDefinition` |
 
 #### Returns
 
