@@ -1,5 +1,13 @@
 # @snickbit/node-cli
 
+## 1.0.50
+
+### Patch Changes
+
+- [2a1022d](https://github.com/snickbit/node-cli/commit/2a1022d) **style**:  heavy code restyling
+- [d2e3104](https://github.com/snickbit/node-cli/commit/d2e3104) **chore**:  bump dependencies
+- [4d0f978](https://github.com/snickbit/node-cli/commit/4d0f978) **docs**:  update
+
 ## 1.0.49
 
 ### Patch Changes
