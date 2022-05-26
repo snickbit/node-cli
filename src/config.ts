@@ -1,29 +1,27 @@
-export type IObject = { [key: string]: any }
+export type IObject = Record<string, any>
 
-export interface Args {
-	[key: string]: Partial<Arg>;
-}
+export type Args = Record<string, Partial<Arg>>
 
 export interface Arg {
-	describe?: string;
-	description?: string;
-	choices?: string[] | ArgChoice[];
-	type: string;
-	default: any;
-	delimited?: boolean;
-	required?: boolean;
+	describe?: string
+	description?: string
+	choices?: ArgChoice[] | string[]
+	type: string
+	default: any
+	delimited?: boolean
+	required?: boolean
 }
 
 export interface ArgChoice {
-	name: string;
-	value: string | number;
+	name: string
+	value: number | string
 }
 
 interface ActionBase {
-	key?: string;
-	name?: string;
-	describe?: string;
-	description?: string;
+	key?: string
+	name?: string
+	describe?: string
+	description?: string
 }
 
 export type ActionFunction = ((...args: any[]) => Promise<any> | any) | {default: ActionFunction}
@@ -40,29 +38,27 @@ export interface ActionDefinition extends ActionBase {
 	method?: ActionFunction
 }
 
-export type Actions = Record<string, ActionDefinition | Action | ImportedAction | ActionFunction | any>
+export type Actions = Record<string, Action | ActionDefinition | ActionFunction | ImportedAction | any>
 
-export interface Options {
-	[key: string]: Partial<Option>;
-}
+export type Options = Record<string, Partial<Option>>
 
 export interface Option extends Arg {
-	alias: string | string[];
+	alias: string[] | string
 }
 
 export interface State {
-	name?: string;
-	version?: string | number;
-	banner?: string;
-	include_working_package: boolean;
-	hide_banner: boolean;
-	bail: boolean;
-	cwd: string;
-	argv: string[];
-	parsed: IObject;
-	args: Partial<Args>;
-	actions: Partial<Actions>;
-	options: Partial<Options>;
+	name?: string
+	version?: number | string
+	banner?: string
+	include_working_package: boolean
+	hide_banner: boolean
+	bail: boolean
+	cwd: string
+	argv: string[]
+	parsed: IObject
+	args: Partial<Args>
+	actions: Partial<Actions>
+	options: Partial<Options>
 }
 
 export const default_state: State = {

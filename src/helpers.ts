@@ -1,5 +1,5 @@
-import {arrayWrap, isNumber} from '@snickbit/utilities'
 import {isBundledElectronApp} from '@snickbit/node-utilities'
+import {arrayWrap, isNumber} from '@snickbit/utilities'
 import {Options} from 'yargs-parser'
 
 /** @internal */
@@ -20,9 +20,7 @@ export const getProcessArgvBinIndex = (): number => isBundledElectronApp() ? 0 :
  */
 export const hideBin = (argv: string[]): string[] => argv.slice(getProcessArgvBinIndex() + 1)
 
-export interface CliOptions extends Options {
-	[key: string]: any
-}
+export type CliOptions = Options & Record<string, any>
 
 export type CliOption = string | keyof CliOptions
 
@@ -64,16 +62,9 @@ export const default_options: CliOptions = {
 	key: undefined
 }
 
-export const object_options = [
-	'alias',
-	'default'
-]
+export const object_options = ['alias', 'default']
 
-export const extra_options = [
-	'describe',
-	'description',
-	'delimited'
-]
+export const extra_options = ['describe', 'description', 'delimited']
 
 export function parseDelimited(value) {
 	const results = []
@@ -129,9 +120,8 @@ export function formatValue(value: any, type?: string) {
 				return value.map(v => formatValue(v))
 			} else if (value === undefined || value === null) {
 				return value
-			} else {
-				return String(value)
 			}
+			return String(value)
 	}
 }
 

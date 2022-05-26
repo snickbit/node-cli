@@ -1,27 +1,30 @@
-import {Action, ActionDefinition, Actions, Arg, Args, default_state, IObject, Option, Options, State} from './config'
-import {arrayWrap, camelCase, isArray, isCallable, isEmpty, isFunction, isNumber, isObject, isString, kebabCase, objectClone, objectFindKey, parseOptions, typeOf} from '@snickbit/utilities'
+import {fileExists, findUp, getFileJson} from '@snickbit/node-utilities'
 import {Out} from '@snickbit/out'
+import {arrayWrap, camelCase, isArray, isCallable, isEmpty, isFunction, isNumber, isObject, isString, kebabCase, objectClone, objectFindKey, parseOptions, typeOf} from '@snickbit/utilities'
+import {Action, ActionDefinition, Actions, Arg, Args, default_state, IObject, Option, Options, State} from './config'
 import {chunkArguments, CliOption, CliOptions, default_options, extra_options, formatValue, helpOut, hideBin, object_options, option_not_predicate, options_equal_predicate, parseDelimited, printLine, space} from './helpers'
 import parser from 'yargs-parser'
-import {fileExists, findUp, getFileJson} from '@snickbit/node-utilities'
 
 /**
  * Simple Node.js CLI framework for creating command line applications.
  */
 export class Cli {
 	#out: Out = new Out('node-cli')
-	#appPrefix: string
-	#appOut: Out
-	state: State
-	private static _instance: Cli
 
+	#appPrefix: string
+
+	#appOut: Out
+
+	state: State
+
+	private static _instance: Cli
 
 	/**
 	 * Create a new Cli instance.
 	 */
-	constructor(args?: IObject);
-	constructor(name?: string);
-	constructor(nameOrArgs?: string | IObject) {
+	constructor(args?: IObject)
+	constructor(name?: string)
+	constructor(nameOrArgs?: IObject | string) {
 		let $cli: Cli
 
 		if (Cli._instance) {
@@ -57,9 +60,8 @@ export class Cli {
 	}
 
 	static #taskName(opts, parent) {
-		return opts.name || [(parent || ''), (opts.key || '')].filter(Boolean).join(':')
+		return opts.name || [parent || '', opts.key || ''].filter(Boolean).join(':')
 	}
-
 
 	get out() {
 		return this.#appOut || this.#out
@@ -108,19 +110,29 @@ export class Cli {
 		const opts: Partial<CliOptions> = {...default_options}
 
 		function pushOpts(key, value) {
-			if (!opts[key]) opts[key] = []
-			if (!opts[key].includes(value)) opts[key].push(value)
+			if (!opts[key]) {
+				opts[key] = []
+			}
+			if (!opts[key].includes(value)) {
+				opts[key].push(value)
+			}
 		}
 
 		function pushKey(opt: CliOption) {
-			if (!opts.keys) opts.keys = []
-			if (!opts.keys.includes(opt)) opts.keys.push(opt)
+			if (!opts.keys) {
+				opts.keys = []
+			}
+			if (!opts.keys.includes(opt)) {
+				opts.keys.push(opt)
+			}
 		}
 
 		// loop through all options
 		for (const [opt, config] of Object.entries(this.state.options)) {
 			// loop through all configuration entries
-			if (!config.type) config.type = 'boolean'
+			if (!config.type) {
+				config.type = 'boolean'
+			}
 			for (const [key, value] of Object.entries(config)) {
 				if (key in opts) {
 					if (object_options.includes(key)) {
@@ -139,7 +151,7 @@ export class Cli {
 					pushOpts(value, opt)
 					pushKey(opt)
 				} else if (!extra_options.includes(key)) {
-					this.out.error('Unknown option: ' + key)
+					this.out.error(`Unknown option: ${key}`)
 				}
 			}
 		}
@@ -147,7 +159,7 @@ export class Cli {
 	}
 
 	#setOutName(name: string) {
-		this.#appPrefix = (this.#appPrefix ? this.#appPrefix + ':' : '') + name
+		this.#appPrefix = (this.#appPrefix ? `${this.#appPrefix}:` : '') + name
 		this.#appOut = new Out(`[${this.#appPrefix}]`, {verbosity: 0})
 		return this.#appOut
 	}
@@ -168,7 +180,7 @@ export class Cli {
 	/**
 	 * Set the version of the application
 	 */
-	version(version: string | number) {
+	version(version: number | string) {
 		this.state.version = version
 		return this
 	}
@@ -224,9 +236,9 @@ export class Cli {
 	/**
 	 * Add new positional argument
 	 */
-	arg(key: string, defaultArg?: string | number): this;
-	arg(key: string, arg?: Arg): this;
-	arg(key: string, argOrDefault?: Arg | string | number): this {
+	arg(key: string, defaultArg?: number | string): this
+	arg(key: string, arg?: Arg): this
+	arg(key: string, argOrDefault?: Arg | number | string): this {
 		this.state.args[key] = parseOptions(argOrDefault, {
 			name: key,
 			key,
@@ -246,9 +258,9 @@ export class Cli {
 	/**
 	 * Add a new action
 	 */
-	action(action: Action | ActionDefinition): this;
-	action(name, description, method): this;
-	action(nameOrAction: string | Action | ActionDefinition, description?: string, method?: Action): this {
+	action(action: Action | ActionDefinition): this
+	action(name, description, method): this
+	action(nameOrAction: Action | ActionDefinition | string, description?: string, method?: Action): this {
 		if (isFunction(nameOrAction)) {
 			const action = nameOrAction as Action
 			this.#addAction({
@@ -303,15 +315,17 @@ export class Cli {
 	showHelp() {
 		printLine()
 
-		helpOut('Usage: ' + this.#appPrefix + ' [command] [options] [arguments]')
+		helpOut(`Usage: ${this.#appPrefix} [command] [options] [arguments]`)
 
 		printLine()
 
 		if (!isEmpty(this.state.options)) {
 			helpOut('Options:')
 			for (let [name, item] of Object.entries(this.state.options)) {
-				let output = space() + '--' + name
-				if (item.alias) output += `, -${item.alias}`
+				let output = `${space()}--${name}`
+				if (item.alias) {
+					output += `, -${item.alias}`
+				}
 				if (item.description) {
 					output += space(2) + item.description
 				}
@@ -352,7 +366,9 @@ export class Cli {
 	 * Show the version message
 	 */
 	showVersion() {
-		if (this.state.version) console.log(`v${this.state.version}`)
+		if (this.state.version) {
+			console.log(`v${this.state.version}`)
+		}
 	}
 
 	/**
@@ -371,7 +387,7 @@ export class Cli {
 			this.out.fatal(`Unknown action: ${action}`, 'Available actions:', Object.keys(this.state.actions).join(', '))
 		}
 
-		this.#out.debug('Running action: ' + action)
+		this.#out.debug(`Running action: ${action}`)
 		this.#setOutName(action)
 
 		try {
@@ -432,16 +448,13 @@ export class Cli {
 				}
 			}
 		} else if (!Array.isArray(argv)) {
-			this.#out.extra('type: ' + typeOf(argv), argv).fatal('Argument \'argv\' must be an array of strings.')
+			this.#out.extra(`type: ${typeOf(argv)}`, argv).fatal('Argument \'argv\' must be an array of strings.')
 		}
 
 		// check for explicitly set count options
 		if (isArray(opts.count) && opts.count.length) {
 			for (const count of opts.count) {
-				const count_aliases = [
-					count,
-					...arrayWrap(opts.alias[count])
-				]
+				const count_aliases = [count, ...arrayWrap(opts.alias[count])]
 				if (camelCase(count) === count) {
 					count_aliases.push(kebabCase(count))
 				}
@@ -483,7 +496,9 @@ export class Cli {
 
 		// populate args
 		const positional = args._.splice(0)
-		if (args['--']) positional.push('--', ...args['--'].splice(0)) && delete args['--']
+		if (args['--']) {
+			positional.push('--', ...args['--'].splice(0)) && delete args['--']
+		}
 		this.#out.debug('Populated args positional args: ', positional)
 		const argument_chunks = chunkArguments(positional)
 		let positional_options = argument_chunks.shift()
@@ -579,7 +594,9 @@ export class Cli {
 				if (workingPackageJson.name) {
 					message += ` {white}${workingPackageJson.name}{/white}`
 					if (workingPackageJson.version) {
-						if (!String(workingPackageJson.version).startsWith('v')) workingPackageJson.version = `v${workingPackageJson.version}`
+						if (!String(workingPackageJson.version).startsWith('v')) {
+							workingPackageJson.version = `v${workingPackageJson.version}`
+						}
 						message += ` {cyan}${workingPackageJson.version}{/cyan}`
 					}
 				}
