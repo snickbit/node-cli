@@ -13,6 +13,7 @@ export class Cli<T extends ParsedArgs = any> {
 	#out: Out = new Out('node-cli')
 	protected appPrefix: string
 	protected appOut: Out
+	protected asAction = false
 	protected state: State<T>
 	private static _instance: Cli
 
@@ -173,9 +174,11 @@ export class Cli<T extends ParsedArgs = any> {
 	/**
 	 * Set the name of the application
 	 */
-	name(name: string) {
-		this.state.name = name
-		this.#setOutName(name)
+	name(name: string): this {
+		if (!this.asAction) {
+			this.state.name = name
+		}
+		this.setOutName(name)
 		return this
 	}
 
