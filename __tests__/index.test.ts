@@ -1,4 +1,4 @@
-import {Cli, cli} from '../src'
+import {cli, Cli} from '../src'
 
 describe('cli', () => {
 	it('cli should be instance of function', () => expect(cli).toBeInstanceOf(Function))
