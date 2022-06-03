@@ -60,7 +60,7 @@ export interface ActionDefinition<T extends ParsedArgs = any> extends ParsedImpo
 
 export type Actions<T extends ParsedArgs = any> = Record<string, | ActionDefinition<T>>
 
-export type RawActions<T extends ParsedArgs = any> = Actions | ImportRecords<T> | RecordOfImportRecords<T>
+export type RawActions<T extends ParsedArgs = any> = Actions | ImportRecords<T> | RecordOfImportRecords<T> | any
 
 export type Options = Record<string, Partial<Option>>
 
