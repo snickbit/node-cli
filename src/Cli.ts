@@ -311,7 +311,7 @@ export class Cli<T extends ParsedArgs = any> {
 		if (!isEmpty(this.state.actions)) {
 			helpOut('Actions:')
 			for (let [name, item] of Object.entries(this.state.actions)) {
-				let output = space() + name
+				let output = space() + [name].concat(item.aliases).join(', ')
 				if (item.description) {
 					output += space(2) + item.description
 				}
