@@ -10,13 +10,9 @@ import parser from 'yargs-parser'
  */
 export class Cli {
 	#out: Out = new Out('node-cli')
-
-	#appPrefix: string
-
-	#appOut: Out
-
-	state: State
-
+	protected appPrefix: string
+	protected appOut: Out
+	protected state: State
 	private static _instance: Cli
 
 	/**
@@ -67,7 +63,7 @@ export class Cli {
 		return this.#appOut || this.#out
 	}
 
-	#addAction(action: ActionDefinition, parent = null) {
+	protected addAction(action: ActionDefinition, parent = null) {
 		if (Object.keys(action).length === 0) {
 			return
 		}
@@ -106,7 +102,7 @@ export class Cli {
 		}
 	}
 
-	#parseOptions() {
+	protected parseOptions() {
 		const opts: Partial<CliOptions> = {...default_options}
 
 		function pushOpts(key, value) {
@@ -151,20 +147,20 @@ export class Cli {
 					pushOpts(value, opt)
 					pushKey(opt)
 				} else if (!extra_options.includes(key)) {
-					this.out.error(`Unknown option: ${key}`)
+					this.$out.error(`Unknown option: ${key}`)
 				}
 			}
 		}
 		return opts
 	}
 
-	#setOutName(name: string) {
+	protected setOutName(name: string) {
 		this.#appPrefix = (this.#appPrefix ? `${this.#appPrefix}:` : '') + name
 		this.#appOut = new Out(`[${this.#appPrefix}]`, {verbosity: 0})
 		return this.#appOut
 	}
 
-	#cleanState() {
+	protected cleanState() {
 		this.state = objectClone(default_state) as State
 	}
 
@@ -374,17 +370,17 @@ export class Cli {
 	/**
 	 * Run an action defined in the CLI program
 	 */
-	async #runAction(args: IObject): Promise<any> {
+	protected async runAction(args: IObject): Promise<any> {
 		const action = args.action
 		args._action = action
 		delete args.action
 		if (typeOf(action) !== 'string') {
-			this.out.fatal('Argument \'action\' must be a string.', args)
+			this.$out.fatal('Argument \'action\' must be a string.', args)
 		}
 
 		const _action = this.state.actions[action]
 		if (!_action) {
-			this.out.fatal(`Unknown action: ${action}`, 'Available actions:', Object.keys(this.state.actions).join(', '))
+			this.$out.fatal(`Unknown action: ${action}`, 'Available actions:', Object.keys(this.state.actions).join(', '))
 		}
 
 		this.#out.debug(`Running action: ${action}`)
@@ -401,17 +397,17 @@ export class Cli {
 			return await method(args)
 		} catch (e) {
 			if (this.state.bail) {
-				this.out.fatal(`Action ${action} failed`, e)
+				this.$out.fatal(`Action ${action} failed`, e)
 			} else {
-				this.out.error(`Action ${action} failed`, e)
+				this.$out.error(`Action ${action} failed`, e)
 				return false
 			}
 		}
 	}
 
-	async #parseArgs(): Promise<IObject> {
+	async parseArgs(): Promise<IObject> {
 		let argv: any[] = this.state.argv || hideBin(process.argv)
-		const opts = this.#parseOptions()
+		const opts = this.parseOptions()
 		let preparsed: IObject = {}
 		const overrides: IObject = {}
 
@@ -556,13 +552,13 @@ export class Cli {
 
 		this.#out.info.debug('Double check default values')
 		const needs_default_opts = opts.keys.filter(key => args[key] === undefined && opts.default[key] !== undefined)
-		this.out.debug({needs_default_opts})
+		this.$out.debug({needs_default_opts})
 		for (const key of needs_default_opts) {
 			args[key] = opts.default[key]
 		}
 
 		const needs_default_args = Object.keys(this.state.args).filter(key => args[key] === undefined && this.state.args[key].default !== undefined)
-		this.out.debug({needs_default_args})
+		this.$out.debug({needs_default_args})
 		for (const key of needs_default_args) {
 			args[key] = this.state.args[key].default
 		}
@@ -603,9 +599,9 @@ export class Cli {
 			}
 
 			if (message) {
-				this.out.block.title.label(label).info(message)
+				this.$out.block.title.label(label).info(message)
 			} else if (label) {
-				this.out.block.info(label)
+				this.$out.block.info(label)
 			}
 		}
 
@@ -621,23 +617,23 @@ export class Cli {
 	 * Run the CLI program, parsing the argv, and running any defined actions
 	 */
 	async run(callback?: Action): Promise<any> {
-		const args = await this.#parseArgs()
+		const args = await this.parseArgs()
 
 		if (this.state.actions && Object.keys(this.state.actions).length && args.action) {
 			this.#out.debug('Found action and action definitions, running action')
-			return this.#runAction(args)
+			return this.runAction(args)
 		} else if (args.version) {
 			return this.showVersion()
 		} else if (args.help) {
 			return this.showHelp()
 		} else if (callback) {
 			this.#out.debug('Sending args to callback')
-			this.#cleanState()
+			this.cleanState()
 			return callback(args)
 		}
 
 		this.#out.debug('Run complete, returning args')
-		this.#cleanState()
+		this.cleanState()
 
 		return args
 	}
