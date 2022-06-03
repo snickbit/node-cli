@@ -357,7 +357,7 @@ export class Cli<T extends ParsedArgs = any> {
 	/**
 	 * Run an action defined in the CLI program
 	 */
-	protected async runAction(args: IObject): Promise<any> {
+	protected async runAction(args: T): Promise<any> {
 		const action = args.action
 		args._action = action
 		delete args.action
