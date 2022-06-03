@@ -67,7 +67,7 @@ export class Cli<T extends ParsedArgs = any> {
 	}
 
 	get out() {
-		return this.#appOut || this.#out
+		return this.appOut || this.#out
 	}
 
 	protected addAction(action: ActionDefinition, parent = null) {
@@ -162,9 +162,9 @@ export class Cli<T extends ParsedArgs = any> {
 	}
 
 	protected setOutName(name: string): Out {
-		this.#appPrefix = (this.#appPrefix ? `${this.#appPrefix}:` : '') + name
-		this.#appOut = new Out(`[${this.#appPrefix}]`, {verbosity: 0})
-		return this.#appOut
+		this.appPrefix = (this.appPrefix ? `${this.appPrefix}:` : '') + name
+		this.appOut = new Out(`[${this.appPrefix}]`, {verbosity: 0})
+		return this.appOut
 	}
 
 	protected cleanState(): this {
@@ -269,20 +269,20 @@ export class Cli<T extends ParsedArgs = any> {
 	action(nameOrAction: Action | ActionDefinition | string, description?: string, method?: Action): this {
 		if (isFunction(nameOrAction)) {
 			const action = nameOrAction as Action
-			this.#addAction({
+			this.addAction({
 				key: action?.key || action?.name,
 				method: action
 			})
 		} else if (isObject(nameOrAction)) {
 			const action = nameOrAction as ActionDefinition
 
-			this.#addAction({
+			this.addAction({
 				key: action.key || action.name,
 				...action
 			})
 		} else {
 			const name = nameOrAction as string
-			this.#addAction({
+			this.addAction({
 				key: name,
 				name,
 				description,
@@ -297,7 +297,7 @@ export class Cli<T extends ParsedArgs = any> {
 	 */
 	actions(actions: Actions): this {
 		for (const [key, action] of Object.entries(actions)) {
-			this.#addAction({
+			this.addAction({
 				key,
 				...action
 			})
@@ -321,7 +321,7 @@ export class Cli<T extends ParsedArgs = any> {
 	showHelp() {
 		printLine()
 
-		helpOut(`Usage: ${this.#appPrefix} [command] [options] [arguments]`)
+		helpOut(`Usage: ${this.appPrefix} [command] [options] [arguments]`)
 
 		printLine()
 
@@ -417,7 +417,7 @@ export class Cli<T extends ParsedArgs = any> {
 		}
 
 		this.#out.debug(`Running action: ${action}`)
-		this.#setOutName(action)
+		this.setOutName(action)
 
 		try {
 			const method = Cli.#getMethod(_action)
@@ -425,7 +425,7 @@ export class Cli<T extends ParsedArgs = any> {
 				this.#out.extra(_action).fatal(`Action ${action} does not have a method`)
 			}
 
-			this.#cleanState()
+			this.cleanState()
 
 			return await method(args)
 		} catch (e) {
