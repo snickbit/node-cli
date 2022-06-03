@@ -1,6 +1,6 @@
-import {fileExists, findUp, getFileJson} from '@snickbit/node-utilities'
+import {fileExists, findUp, getFileJson, parseImports} from '@snickbit/node-utilities'
 import {Out} from '@snickbit/out'
-import {arrayWrap, camelCase, isArray, isCallable, isEmpty, isFunction, isNumber, isObject, isString, kebabCase, objectClone, objectFindKey, parseOptions, typeOf} from '@snickbit/utilities'
+import {arrayWrap, camelCase, isArray, isEmpty, isNumber, isObject, kebabCase, objectClone, objectFindKey, parseOptions, typeOf} from '@snickbit/utilities'
 import {Action, ActionDefinition, Actions, Arg, Args, Option, Options, ParsedArgs, RawActions, State} from './definitions'
 import {default_state} from './config'
 import {chunkArguments, CliOption, CliOptions, default_options, extra_options, formatValue, helpOut, hideBin, object_options, option_not_predicate, options_equal_predicate, parseDelimited, printLine, space} from './helpers'
@@ -46,55 +46,16 @@ export class Cli<T extends ParsedArgs = any> {
 		return $cli
 	}
 
-	static #getMethod(opts) {
-		let method
-		if (isCallable(opts, true)) {
-			method = opts
-		} else if (isCallable(opts.method, true)) {
-			method = opts.method
-		} else if (isCallable(opts.default, true)) {
-			method = opts.default
-		} else if (isCallable(opts.run, true)) {
-			method = opts.run
-		} else if (isCallable(opts.handler, true)) {
-			method = opts.handler
-		}
-		return method
-	}
-
-	static #taskName(opts, parent) {
-		return opts.name || [parent || '', opts.key || ''].filter(Boolean).join(':')
-	}
-
-	get out() {
+	get $out() {
 		return this.appOut || this.#out
 	}
 
-	protected addAction(action: ActionDefinition, parent = null) {
+	protected addAction(action: ActionDefinition): this {
 		if (Object.keys(action).length === 0) {
 			return
 		}
 
-		const name = Cli.#taskName(action, parent)
-		const description = action?.description || action?.describe
-		const method = Cli.#getMethod(action)
-		if (!method) {
-			for (let [child_key, child] of Object.entries(action)) {
-				if (isObject(child)) {
-					child = {
-						key: child_key,
-						...child as object
-					}
-					this.#addAction(child, name)
-				}
-			}
-		} else {
-			this.state.actions[name] = {
-				name,
-				description,
-				method
-			} as ActionDefinition
-		}
+		this.state.actions[action.name] = action
 
 		if (!this.state.args) {
 			this.state.args = {}
@@ -264,43 +225,36 @@ export class Cli<T extends ParsedArgs = any> {
 	/**
 	 * Add a new action
 	 */
-	action(action: Action | ActionDefinition): this
-	action(name, description, method): this
-	action(nameOrAction: Action | ActionDefinition | string, description?: string, method?: Action): this {
-		if (isFunction(nameOrAction)) {
-			const action = nameOrAction as Action
-			this.addAction({
-				key: action?.key || action?.name,
-				method: action
-			})
-		} else if (isObject(nameOrAction)) {
-			const action = nameOrAction as ActionDefinition
+	action(action: ActionDefinition): this
+	action(name: string, action: Action): this
+	action(name: string, description: string, action: Action): this
+	action(nameOrAction: ActionDefinition | string, descriptionOrAction?: Action | string, optionalAction?: Action): this {
+		const definition = {} as ActionDefinition
 
-			this.addAction({
-				key: action.key || action.name,
-				...action
-			})
+		if (typeof nameOrAction === 'string') {
+			definition.name = nameOrAction
+
+			if (typeof descriptionOrAction === 'string') {
+				definition.description = descriptionOrAction
+				definition.handler = optionalAction
+			} else {
+				definition.handler = descriptionOrAction
+			}
 		} else {
-			const name = nameOrAction as string
-			this.addAction({
-				key: name,
-				name,
-				description,
-				method
-			})
+			Object.assign(definition, nameOrAction)
 		}
+
+		this.addAction(definition)
 		return this
 	}
 
 	/**
 	 * Add new actions. Will override existing.
 	 */
-	actions(actions: Actions): this {
-		for (const [key, action] of Object.entries(actions)) {
-			this.addAction({
-				key,
-				...action
-			})
+	actions(actions: RawActions): this {
+		const parsed: Actions = parseImports(actions as any)
+		for (const index in parsed) {
+			this.addAction(parsed[index])
 		}
 		return this
 	}
@@ -420,14 +374,14 @@ export class Cli<T extends ParsedArgs = any> {
 		this.setOutName(action)
 
 		try {
-			const method = Cli.#getMethod(_action)
-			if (!method) {
-				this.#out.extra(_action).fatal(`Action ${action} does not have a method`)
+			const handler = _action.handler
+			if (!handler) {
+				this.#out.extra(_action).fatal(`Action ${action} does not have a handler`)
 			}
 
 			this.cleanState()
 
-			return await method(args)
+			return await handler(args)
 		} catch (e) {
 			if (this.state.bail) {
 				this.$out.fatal(`Action ${action} failed`, e)
