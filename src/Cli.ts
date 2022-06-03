@@ -377,6 +377,29 @@ export class Cli<T extends ParsedArgs = any> {
 		}
 	}
 
+	private getAction(key: string): ActionDefinition | undefined {
+		this.$out.info(this.state.actions)
+
+		if (key in this.state.actions) {
+			this.$out.debug('Found action', key)
+			return this.state.actions[key]
+		}
+
+		for (let action of Object.values(this.state.actions)) {
+			if (action.name === key) {
+				this.$out.debug('Found action', key)
+				return action
+			}
+
+			if (Array.isArray(action.aliases) && action.aliases.includes(key)) {
+				this.$out.debug('Found action alias', key)
+				return action
+			}
+		}
+
+		return undefined
+	}
+
 	/**
 	 * Run an action defined in the CLI program
 	 */
@@ -388,7 +411,7 @@ export class Cli<T extends ParsedArgs = any> {
 			this.$out.fatal('Argument \'action\' must be a string.', args)
 		}
 
-		const _action = this.state.actions[action]
+		const _action = this.getAction(action)
 		if (!_action) {
 			this.$out.fatal(`Unknown action: ${action}`, 'Available actions:', Object.keys(this.state.actions).join(', '))
 		}
