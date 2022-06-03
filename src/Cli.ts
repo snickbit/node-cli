@@ -1,7 +1,7 @@
 import {fileExists, findUp, getFileJson} from '@snickbit/node-utilities'
 import {Out} from '@snickbit/out'
 import {arrayWrap, camelCase, isArray, isCallable, isEmpty, isFunction, isNumber, isObject, isString, kebabCase, objectClone, objectFindKey, parseOptions, typeOf} from '@snickbit/utilities'
-import {IObject, Action, ActionDefinition, Actions, Arg, Args, Option, Options, ParsedArgs, RawActions, State} from './definitions'
+import {Action, ActionDefinition, Actions, Arg, Args, Option, Options, ParsedArgs, RawActions, State} from './definitions'
 import {default_state} from './config'
 import {chunkArguments, CliOption, CliOptions, default_options, extra_options, formatValue, helpOut, hideBin, object_options, option_not_predicate, options_equal_predicate, parseDelimited, printLine, space} from './helpers'
 import parser from 'yargs-parser'
@@ -9,19 +9,20 @@ import parser from 'yargs-parser'
 /**
  * Simple Node.js CLI framework for creating command line applications.
  */
-export class Cli {
+export class Cli<T extends ParsedArgs = any> {
 	#out: Out = new Out('node-cli')
 	protected appPrefix: string
 	protected appOut: Out
-	protected state: State
+	protected state: State<T>
 	private static _instance: Cli
 
 	/**
 	 * Create a new Cli instance.
 	 */
-	constructor(args?: IObject)
 	constructor(name?: string)
-	constructor(nameOrArgs?: IObject | string) {
+	constructor(args?: T)
+	constructor(name?: string, args?: T)
+	constructor(nameOrArgs?: T | string, optionalArgs?: T) {
 		let $cli: Cli
 
 		if (Cli._instance) {
@@ -31,10 +32,14 @@ export class Cli {
 			$cli.state = objectClone(default_state) as State
 		}
 
-		if (isString(nameOrArgs)) {
-			$cli.name(nameOrArgs as string)
-		} else {
-			Object.assign($cli.state.parsed, nameOrArgs as IObject)
+		const args = optionalArgs || isObject(nameOrArgs) ? nameOrArgs : {}
+		if (args) {
+			Object.assign($cli.state.parsed, args)
+			this.asAction = true
+		}
+
+		if (typeof nameOrArgs === 'string') {
+			$cli.name(nameOrArgs)
 		}
 
 		return $cli
