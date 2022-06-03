@@ -161,14 +161,15 @@ export class Cli<T extends ParsedArgs = any> {
 		return opts
 	}
 
-	protected setOutName(name: string) {
+	protected setOutName(name: string): Out {
 		this.#appPrefix = (this.#appPrefix ? `${this.#appPrefix}:` : '') + name
 		this.#appOut = new Out(`[${this.#appPrefix}]`, {verbosity: 0})
 		return this.#appOut
 	}
 
-	protected cleanState() {
+	protected cleanState(): this {
 		this.state = objectClone(default_state) as State
+		return this
 	}
 
 	/**
@@ -185,7 +186,7 @@ export class Cli<T extends ParsedArgs = any> {
 	/**
 	 * Set the version of the application
 	 */
-	version(version: number | string) {
+	version(version: number | string): this {
 		this.state.version = version
 		return this
 	}
@@ -193,7 +194,7 @@ export class Cli<T extends ParsedArgs = any> {
 	/**
 	 * Set the description / banner message of the application
 	 */
-	banner(message: string) {
+	banner(message: string): this {
 		this.state.banner = message
 		return this
 	}
@@ -201,7 +202,7 @@ export class Cli<T extends ParsedArgs = any> {
 	/**
 	 * Hide the banner message
 	 */
-	hideBanner(value = true) {
+	hideBanner(value = true): this {
 		this.state.hide_banner = value !== false
 		return this
 	}
@@ -209,7 +210,7 @@ export class Cli<T extends ParsedArgs = any> {
 	/**
 	 * Attempt to pull the name and version from the closest package.json file to the current working directory.
 	 */
-	includeWorkingPackage(value = true) {
+	includeWorkingPackage(value = true): this {
 		this.state.include_working_package = value !== false
 		return this
 	}
@@ -217,7 +218,7 @@ export class Cli<T extends ParsedArgs = any> {
 	/**
 	 * Don't kill the process on error
 	 */
-	noBail(value = false) {
+	noBail(value = false): this {
 		this.state.bail = value !== true
 		return this
 	}
@@ -225,7 +226,7 @@ export class Cli<T extends ParsedArgs = any> {
 	/**
 	 * Add a new flag/option
 	 */
-	option(key: string, option: Partial<Option>) {
+	option(key: string, option: Partial<Option>): this {
 		this.state.options[key] = option
 		return this
 	}
@@ -233,7 +234,7 @@ export class Cli<T extends ParsedArgs = any> {
 	/**
 	 * Add new flags/options. Will override existing.
 	 */
-	options(options: Options) {
+	options(options: Options): this {
 		Object.assign(this.state.options, options)
 		return this
 	}
@@ -255,7 +256,7 @@ export class Cli<T extends ParsedArgs = any> {
 	/**
 	 * Add new positional arguments. Will override existing.
 	 */
-	args(args: Args) {
+	args(args: Args): this {
 		Object.assign(this.state.args, args)
 		return this
 	}
@@ -294,7 +295,7 @@ export class Cli<T extends ParsedArgs = any> {
 	/**
 	 * Add new actions. Will override existing.
 	 */
-	actions(actions: Actions) {
+	actions(actions: Actions): this {
 		for (const [key, action] of Object.entries(actions)) {
 			this.#addAction({
 				key,
@@ -307,7 +308,7 @@ export class Cli<T extends ParsedArgs = any> {
 	/**
 	 * Set the default action
 	 */
-	defaultAction(name: string) {
+	defaultAction(name: string): this {
 		if (this.state.args?.action) {
 			this.state.args.action.default = name
 		}
@@ -414,11 +415,11 @@ export class Cli<T extends ParsedArgs = any> {
 		}
 	}
 
-	async parseArgs(): Promise<IObject> {
+	protected async parseArgs(): Promise<T> {
 		let argv: any[] = this.state.argv || hideBin(process.argv)
 		const opts = this.parseOptions()
-		let preparsed: IObject = {}
-		const overrides: IObject = {}
+		let preparsed = {} as T
+		const overrides: any = {}
 
 		if (!isEmpty(this.state.parsed)) {
 			preparsed = this.state.parsed
@@ -591,7 +592,7 @@ export class Cli<T extends ParsedArgs = any> {
 			let message = this.state.banner || ''
 			if (this.state.include_working_package) {
 				const workingPackageJsonFile = findUp('package.json')
-				let workingPackageJson: IObject = {}
+				let workingPackageJson: any = {}
 				if (workingPackageJsonFile && fileExists(workingPackageJsonFile)) {
 					workingPackageJson = getFileJson(workingPackageJsonFile)
 				}
