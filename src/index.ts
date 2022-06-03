@@ -1,5 +1,5 @@
 import {Cli} from './Cli'
-import {IObject} from './config'
+import {IObject} from './definitions'
 
 /**
  * Simple Node.js CLI framework for creating command line applications.
