@@ -332,8 +332,6 @@ export class Cli<T extends ParsedArgs = any> {
 	}
 
 	private getAction(key: string): ActionDefinition | undefined {
-		this.$out.info(this.state.actions)
-
 		if (key in this.state.actions) {
 			this.$out.debug('Found action', key)
 			return this.state.actions[key]
