@@ -24,7 +24,7 @@ Renames and re-exports [cli](README.md#cli)
 
 ### cli
 
-▸ **cli**(`args?`): [`Cli`](classes/Cli.md)
+▸ **cli**(`name?`): [`Cli`](classes/Cli.md)
 
 Simple Node.js CLI framework for creating command line applications.
 
@@ -32,19 +32,44 @@ Simple Node.js CLI framework for creating command line applications.
 
 | Name | Type |
 | :------ | :------ |
-| `args?` | `IObject` |
+| `name?` | `string` |
 
 #### Returns
 
 [`Cli`](classes/Cli.md)
 
-▸ **cli**(`name?`): [`Cli`](classes/Cli.md)
+▸ **cli**<`T`\>(`args?`): [`Cli`](classes/Cli.md)
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `ParsedArgs` = `any` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `args?` | `T` |
+
+#### Returns
+
+[`Cli`](classes/Cli.md)
+
+▸ **cli**<`T`\>(`name?`, `args?`): [`Cli`](classes/Cli.md)
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `ParsedArgs` = `any` |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `name?` | `string` |
+| `args?` | `T` |
 
 #### Returns
 

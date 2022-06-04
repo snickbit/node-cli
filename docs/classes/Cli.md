@@ -1,6 +1,12 @@
-# Class: Cli
+# Class: Cli<T\>
 
 Simple Node.js CLI framework for creating command line applications.
+
+## Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `ParsedArgs` = `any` |
 
 ## Table of contents
 
@@ -8,13 +14,9 @@ Simple Node.js CLI framework for creating command line applications.
 
 - [constructor](Cli.md#constructor)
 
-### Properties
-
-- [state](Cli.md#state)
-
 ### Accessors
 
-- [out](Cli.md#out)
+- [$out](Cli.md#$out)
 
 ### Methods
 
@@ -39,17 +41,15 @@ Simple Node.js CLI framework for creating command line applications.
 
 ### constructor
 
-• **new Cli**(`args?`)
+• **new Cli**<`T`\>(`name?`)
 
 Create a new Cli instance.
 
-#### Parameters
+#### Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `args?` | `IObject` |
-
-• **new Cli**(`name?`)
+| `T` | extends `ParsedArgs` = `any` |
 
 #### Parameters
 
@@ -57,17 +57,40 @@ Create a new Cli instance.
 | :------ | :------ |
 | `name?` | `string` |
 
-## Properties
+• **new Cli**<`T`\>(`args?`)
 
-### state
+#### Type parameters
 
-• **state**: `State`
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `ParsedArgs` = `any` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `args?` | `T` |
+
+• **new Cli**<`T`\>(`name?`, `args?`)
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | extends `ParsedArgs` = `any` |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `name?` | `string` |
+| `args?` | `T` |
 
 ## Accessors
 
-### out
+### $out
 
-• `get` **out**(): `Out`
+• `get` **$out**(): `Out`
 
 #### Returns
 
@@ -77,7 +100,7 @@ Create a new Cli instance.
 
 ### action
 
-▸ **action**(`action`): [`Cli`](Cli.md)
+▸ **action**(`action`): [`Cli`](Cli.md)<`T`\>
 
 Add a new action
 
@@ -85,31 +108,44 @@ Add a new action
 
 | Name | Type |
 | :------ | :------ |
-| `action` | `Action` \| `ActionDefinition` |
+| `action` | `ActionDefinition`<`any`\> |
 
 #### Returns
 
-[`Cli`](Cli.md)
+[`Cli`](Cli.md)<`T`\>
 
-▸ **action**(`name`, `description`, `method`): [`Cli`](Cli.md)
+▸ **action**(`name`, `action`): [`Cli`](Cli.md)<`T`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `name` | `any` |
-| `description` | `any` |
-| `method` | `any` |
+| `name` | `string` |
+| `action` | `Action`<`any`\> |
 
 #### Returns
 
-[`Cli`](Cli.md)
+[`Cli`](Cli.md)<`T`\>
+
+▸ **action**(`name`, `description`, `action`): [`Cli`](Cli.md)<`T`\>
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `name` | `string` |
+| `description` | `string` |
+| `action` | `Action`<`any`\> |
+
+#### Returns
+
+[`Cli`](Cli.md)<`T`\>
 
 ___
 
 ### actions
 
-▸ **actions**(`actions`): [`Cli`](Cli.md)
+▸ **actions**(`actions`): [`Cli`](Cli.md)<`T`\>
 
 Add new actions. Will override existing.
 
@@ -117,17 +153,17 @@ Add new actions. Will override existing.
 
 | Name | Type |
 | :------ | :------ |
-| `actions` | `Actions` |
+| `actions` | `any` |
 
 #### Returns
 
-[`Cli`](Cli.md)
+[`Cli`](Cli.md)<`T`\>
 
 ___
 
 ### arg
 
-▸ **arg**(`key`, `defaultArg?`): [`Cli`](Cli.md)
+▸ **arg**(`key`, `defaultArg?`): [`Cli`](Cli.md)<`T`\>
 
 Add new positional argument
 
@@ -140,9 +176,9 @@ Add new positional argument
 
 #### Returns
 
-[`Cli`](Cli.md)
+[`Cli`](Cli.md)<`T`\>
 
-▸ **arg**(`key`, `arg?`): [`Cli`](Cli.md)
+▸ **arg**(`key`, `arg?`): [`Cli`](Cli.md)<`T`\>
 
 #### Parameters
 
@@ -153,13 +189,13 @@ Add new positional argument
 
 #### Returns
 
-[`Cli`](Cli.md)
+[`Cli`](Cli.md)<`T`\>
 
 ___
 
 ### args
 
-▸ **args**(`args`): [`Cli`](Cli.md)
+▸ **args**(`args`): [`Cli`](Cli.md)<`T`\>
 
 Add new positional arguments. Will override existing.
 
@@ -171,13 +207,13 @@ Add new positional arguments. Will override existing.
 
 #### Returns
 
-[`Cli`](Cli.md)
+[`Cli`](Cli.md)<`T`\>
 
 ___
 
 ### banner
 
-▸ **banner**(`message`): [`Cli`](Cli.md)
+▸ **banner**(`message`): [`Cli`](Cli.md)<`T`\>
 
 Set the description / banner message of the application
 
@@ -189,13 +225,13 @@ Set the description / banner message of the application
 
 #### Returns
 
-[`Cli`](Cli.md)
+[`Cli`](Cli.md)<`T`\>
 
 ___
 
 ### defaultAction
 
-▸ **defaultAction**(`name`): [`Cli`](Cli.md)
+▸ **defaultAction**(`name`): [`Cli`](Cli.md)<`T`\>
 
 Set the default action
 
@@ -207,13 +243,13 @@ Set the default action
 
 #### Returns
 
-[`Cli`](Cli.md)
+[`Cli`](Cli.md)<`T`\>
 
 ___
 
 ### hideBanner
 
-▸ **hideBanner**(`value?`): [`Cli`](Cli.md)
+▸ **hideBanner**(`value?`): [`Cli`](Cli.md)<`T`\>
 
 Hide the banner message
 
@@ -225,13 +261,13 @@ Hide the banner message
 
 #### Returns
 
-[`Cli`](Cli.md)
+[`Cli`](Cli.md)<`T`\>
 
 ___
 
 ### includeWorkingPackage
 
-▸ **includeWorkingPackage**(`value?`): [`Cli`](Cli.md)
+▸ **includeWorkingPackage**(`value?`): [`Cli`](Cli.md)<`T`\>
 
 Attempt to pull the name and version from the closest package.json file to the current working directory.
 
@@ -243,13 +279,13 @@ Attempt to pull the name and version from the closest package.json file to the c
 
 #### Returns
 
-[`Cli`](Cli.md)
+[`Cli`](Cli.md)<`T`\>
 
 ___
 
 ### name
 
-▸ **name**(`name`): [`Cli`](Cli.md)
+▸ **name**(`name`): [`Cli`](Cli.md)<`T`\>
 
 Set the name of the application
 
@@ -261,13 +297,13 @@ Set the name of the application
 
 #### Returns
 
-[`Cli`](Cli.md)
+[`Cli`](Cli.md)<`T`\>
 
 ___
 
 ### noBail
 
-▸ **noBail**(`value?`): [`Cli`](Cli.md)
+▸ **noBail**(`value?`): [`Cli`](Cli.md)<`T`\>
 
 Don't kill the process on error
 
@@ -279,13 +315,13 @@ Don't kill the process on error
 
 #### Returns
 
-[`Cli`](Cli.md)
+[`Cli`](Cli.md)<`T`\>
 
 ___
 
 ### option
 
-▸ **option**(`key`, `option`): [`Cli`](Cli.md)
+▸ **option**(`key`, `option`): [`Cli`](Cli.md)<`T`\>
 
 Add a new flag/option
 
@@ -298,13 +334,13 @@ Add a new flag/option
 
 #### Returns
 
-[`Cli`](Cli.md)
+[`Cli`](Cli.md)<`T`\>
 
 ___
 
 ### options
 
-▸ **options**(`options`): [`Cli`](Cli.md)
+▸ **options**(`options`): [`Cli`](Cli.md)<`T`\>
 
 Add new flags/options. Will override existing.
 
@@ -316,7 +352,7 @@ Add new flags/options. Will override existing.
 
 #### Returns
 
-[`Cli`](Cli.md)
+[`Cli`](Cli.md)<`T`\>
 
 ___
 
@@ -330,7 +366,7 @@ Run the CLI program, parsing the argv, and running any defined actions
 
 | Name | Type |
 | :------ | :------ |
-| `callback?` | `Action` |
+| `callback?` | `Action`<`any`\> |
 
 #### Returns
 
@@ -364,7 +400,7 @@ ___
 
 ### version
 
-▸ **version**(`version`): [`Cli`](Cli.md)
+▸ **version**(`version`): [`Cli`](Cli.md)<`T`\>
 
 Set the version of the application
 
@@ -376,4 +412,4 @@ Set the version of the application
 
 #### Returns
 
-[`Cli`](Cli.md)
+[`Cli`](Cli.md)<`T`\>
