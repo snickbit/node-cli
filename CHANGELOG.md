@@ -1,5 +1,14 @@
 # @snickbit/node-cli
 
+## 1.0.57
+
+### Patch Changes
+
+- [cf84df0](https://github.com/snickbit/node-cli/commit/cf84df0) **docs**:  update
+- [7c56dc7](https://github.com/snickbit/node-cli/commit/7c56dc7) **build**:  reimplement turborepo
+- [90f41e1](https://github.com/snickbit/node-cli/commit/90f41e1) **fix**:  adjust factory export
+- [a25ee9f](https://github.com/snickbit/node-cli/commit/a25ee9f) **fix**:  adjust exports
+
 ## 1.0.53
 
 ### Patch Changes
