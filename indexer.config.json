@@ -1,0 +1,10 @@
+{
+	"typescript": true,
+	"source": "src/**/*.ts",
+	"output": "src/index.ts",
+	"type": "wildcard",
+	"default": {
+		"source": "src/factory.ts",
+		"type": "wildcard"
+	}
+}
