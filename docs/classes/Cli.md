@@ -6,7 +6,7 @@ Simple Node.js CLI framework for creating command line applications.
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `ParsedArgs` = `any` |
+| `T` | extends [`ParsedArgs`](../interfaces/ParsedArgs.md) = `any` |
 
 ## Table of contents
 
@@ -49,7 +49,7 @@ Create a new Cli instance.
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `ParsedArgs` = `any` |
+| `T` | extends [`ParsedArgs`](../interfaces/ParsedArgs.md) = `any` |
 
 #### Parameters
 
@@ -63,7 +63,7 @@ Create a new Cli instance.
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `ParsedArgs` = `any` |
+| `T` | extends [`ParsedArgs`](../interfaces/ParsedArgs.md) = `any` |
 
 #### Parameters
 
@@ -77,7 +77,7 @@ Create a new Cli instance.
 
 | Name | Type |
 | :------ | :------ |
-| `T` | extends `ParsedArgs` = `any` |
+| `T` | extends [`ParsedArgs`](../interfaces/ParsedArgs.md) = `any` |
 
 #### Parameters
 
@@ -108,7 +108,7 @@ Add a new action
 
 | Name | Type |
 | :------ | :------ |
-| `action` | `ActionDefinition`<`any`\> |
+| `action` | [`ActionDefinition`](../interfaces/ActionDefinition.md)<`any`\> |
 
 #### Returns
 
@@ -121,7 +121,7 @@ Add a new action
 | Name | Type |
 | :------ | :------ |
 | `name` | `string` |
-| `action` | `Action`<`any`\> |
+| `action` | [`Action`](../interfaces/Action.md)<`any`\> |
 
 #### Returns
 
@@ -135,7 +135,7 @@ Add a new action
 | :------ | :------ |
 | `name` | `string` |
 | `description` | `string` |
-| `action` | `Action`<`any`\> |
+| `action` | [`Action`](../interfaces/Action.md)<`any`\> |
 
 #### Returns
 
@@ -185,7 +185,7 @@ Add new positional argument
 | Name | Type |
 | :------ | :------ |
 | `key` | `string` |
-| `arg?` | `Arg` |
+| `arg?` | [`Arg`](../interfaces/Arg.md) |
 
 #### Returns
 
@@ -203,7 +203,7 @@ Add new positional arguments. Will override existing.
 
 | Name | Type |
 | :------ | :------ |
-| `args` | `Args` |
+| `args` | [`Args`](../README.md#args) |
 
 #### Returns
 
@@ -330,7 +330,7 @@ Add a new flag/option
 | Name | Type |
 | :------ | :------ |
 | `key` | `string` |
-| `option` | `Partial`<`Option`\> |
+| `option` | `Partial`<[`Option`](../interfaces/Option.md)\> |
 
 #### Returns
 
@@ -348,7 +348,7 @@ Add new flags/options. Will override existing.
 
 | Name | Type |
 | :------ | :------ |
-| `options` | `Options` |
+| `options` | [`Options`](../README.md#options) |
 
 #### Returns
 
@@ -366,7 +366,7 @@ Run the CLI program, parsing the argv, and running any defined actions
 
 | Name | Type |
 | :------ | :------ |
-| `callback?` | `Action`<`any`\> |
+| `callback?` | [`Action`](../interfaces/Action.md)<`any`\> |
 
 #### Returns
 
