@@ -5,6 +5,6 @@
 	"type": "wildcard",
 	"default": {
 		"source": "src/factory.ts",
-		"type": "wildcard"
+		"type": "default"
 	}
 }
