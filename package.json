@@ -1,6 +1,6 @@
 {
 	"name": "@snickbit/node-cli",
-	"version": "1.0.57",
+	"version": "1.0.58",
 	"description": "Simple Node.js CLI framework for creating command line applications.",
 	"license": "MIT",
 	"exports": {
@@ -31,7 +31,7 @@
 		"testEnvironment": "node"
 	},
 	"dependencies": {
-		"@snickbit/node-utilities": "^4.3.13",
+		"@snickbit/node-utilities": "^4.3.14",
 		"@snickbit/out": "^2.0.33",
 		"@snickbit/utilities": "^3.0.27",
 		"yargs-parser": "^21.0.1"
