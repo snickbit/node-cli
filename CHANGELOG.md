@@ -1,5 +1,13 @@
 # @snickbit/node-cli
 
+## 1.0.59
+
+### Patch Changes
+
+- [a5c537e](https://github.com/snickbit/node-cli/commit/a5c537e) **fix**:  migrate to @snickbit/indexer
+- [9845a09](https://github.com/snickbit/node-cli/commit/9845a09) **chore**:  bump dependencies
+- [68fa6f1](https://github.com/snickbit/node-cli/commit/68fa6f1) **chore**:  bump dependencies
+
 ## 1.0.57
 
 ### Patch Changes
