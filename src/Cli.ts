@@ -1,7 +1,7 @@
 import {fileExists, findUp, getFileJson, parseImports} from '@snickbit/node-utilities'
 import {Out} from '@snickbit/out'
 import {arrayWrap, camelCase, isArray, isEmpty, isNumber, isObject, kebabCase, objectClone, objectFindKey, parseOptions, typeOf} from '@snickbit/utilities'
-import {Action, ActionDefinition, Actions, Arg, Args, Option, Options, ParsedArgs, RawActions, State} from './definitions'
+import {Action, ActionDefinition, Actions, Arg, Args, CLISettings, Option, Options, ParsedArgs, RawActions, State} from './definitions'
 import {default_state} from './config'
 import {chunkArguments, CliOption, CliOptions, default_options, extra_options, formatValue, helpOut, hideBin, object_options, option_not_predicate, options_equal_predicate, parseDelimited, printLine, space} from './helpers'
 import parser from 'yargs-parser'
@@ -44,6 +44,28 @@ export class Cli<T extends ParsedArgs = any> {
 		}
 
 		return $cli
+	}
+
+	config<O extends keyof CLISettings>(option: O, value?: any)
+	config(options: CLISettings)
+	config<O extends keyof CLISettings>(optionOrOptions: CLISettings | O, value?: any): this {
+		if (typeof optionOrOptions !== 'string') {
+			Object.assign(this.state, optionOrOptions)
+		} else {
+			const option = optionOrOptions as O
+
+			if (option === 'out') {
+				if (value instanceof Out) {
+					this.appOut = value
+				} else {
+					this.appOut = new Out(value)
+				}
+			} else {
+				this.state[option] = value
+			}
+		}
+
+		return this
 	}
 
 	get $out() {

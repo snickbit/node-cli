@@ -1,4 +1,5 @@
 import {ImportMethod, ImportRecords, ParsedImport, RecordOfImportRecords} from '@snickbit/node-utilities'
+import {Out} from '@snickbit/out'
 
 export type ArgV = string[]
 
@@ -68,17 +69,21 @@ export interface Option extends Arg {
 	alias: string[] | string
 }
 
-export interface State<T extends ParsedArgs = any> {
-	name?: string
-	version?: number | string
+export interface CLISettings {
+	bail?: boolean
 	banner?: string
-	include_working_package: boolean
-	hide_banner: boolean
-	bail: boolean
-	cwd: string
-	argv: string[]
-	parsed: T
-	args: Partial<Args>
+	cwd?: string
+	hide_banner?: boolean
+	include_working_package?: boolean
+	name?: string
+	out?: Out
+	version?: number | string
+}
+
+export interface State<T extends ParsedArgs = any> extends CLISettings {
 	actions: Partial<Actions>
+	args: Partial<Args>
+	argv: string[]
 	options: Partial<Options>
+	parsed: T
 }
