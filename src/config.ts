@@ -1,5 +1,16 @@
 import {State} from './definitions'
 
+export const allowed_keys = [
+	'bail',
+	'banner',
+	'cwd',
+	'hide_banner',
+	'include_working_package',
+	'name',
+	'out',
+	'version'
+]
+
 export const default_state: State = {
 	name: undefined,
 	version: undefined,
