@@ -1,6 +1,6 @@
 import {fileExists, findUp, getFileJson, parseImports} from '@snickbit/node-utilities'
 import {Out} from '@snickbit/out'
-import {arrayWrap, camelCase, isArray, isEmpty, isNumber, isObject, kebabCase, objectClone, objectFindKey, parseOptions, typeOf} from '@snickbit/utilities'
+import {arrayWrap, camelCase, isArray, isEmpty, isNumber, kebabCase, objectClone, objectFindKey, parseOptions, typeOf} from '@snickbit/utilities'
 import {Action, ActionDefinition, Actions, Arg, Args, CLISettings, Option, Options, ParsedArgs, RawActions, State} from './definitions'
 import {default_state} from './config'
 import {chunkArguments, CliOption, CliOptions, default_options, extra_options, formatValue, helpOut, hideBin, object_options, option_not_predicate, options_equal_predicate, parseDelimited, printLine, space} from './helpers'
@@ -20,10 +20,9 @@ export class Cli<T extends ParsedArgs = any> {
 	/**
 	 * Create a new Cli instance.
 	 */
-	constructor(name?: string)
-	constructor(args?: T)
-	constructor(name?: string, args?: T)
-	constructor(nameOrArgs?: T | string, optionalArgs?: T) {
+	constructor(args?: T, options?: CLISettings)
+	constructor(name?: string, args?: T, options?: CLISettings)
+	constructor(nameOrArgs?: T | string, optionalArgsOrOptions?: CLISettings | T, optionalOptions?: CLISettings) {
 		let $cli: Cli
 
 		if (Cli._instance) {
@@ -33,14 +32,31 @@ export class Cli<T extends ParsedArgs = any> {
 			$cli.state = objectClone(default_state) as State
 		}
 
-		const args = optionalArgs || isObject(nameOrArgs) ? nameOrArgs : {}
+		let name: string
+		let args: T
+		let options: CLISettings
+
+		if (typeof nameOrArgs === 'string') {
+			name = nameOrArgs
+			args = (optionalArgsOrOptions || {}) as T
+			options = (optionalOptions || {}) as CLISettings
+		} else {
+			args = (nameOrArgs || {}) as T
+			options = (optionalArgsOrOptions || {}) as CLISettings
+			name = options?.name
+		}
+
 		if (args) {
 			Object.assign($cli.state.parsed, args)
 			this.asAction = true
 		}
 
-		if (typeof nameOrArgs === 'string') {
-			$cli.name(nameOrArgs)
+		if (name) {
+			$cli.name(name)
+		}
+
+		if (options) {
+			this.config(options)
 		}
 
 		return $cli
