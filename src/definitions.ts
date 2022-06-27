@@ -81,6 +81,7 @@ export interface CLISettings {
 }
 
 export interface State<T extends ParsedArgs = any> extends CLISettings {
+	action?: string
 	actions: Partial<Actions>
 	args: Partial<Args>
 	argv: string[]

@@ -123,6 +123,10 @@ export class Cli<T extends ParsedArgs = any> {
 		return this.appOut || this.#out
 	}
 
+	get $name(): string {
+		return this.asAction && this.state.action ? this.state.action : this.state.name
+	}
+
 	protected addAction(action: ActionDefinition): this {
 		if (Object.keys(action).length === 0) {
 			return
@@ -210,7 +214,11 @@ export class Cli<T extends ParsedArgs = any> {
 	 * Set the name of the application
 	 */
 	name(name: string): this {
-		if (!this.asAction) {
+		if (this.asAction) {
+			// Set name of action
+			this.state.action = name
+		} else {
+			// Set name of CLI
 			this.state.name = name
 		}
 		this.setOutName(name)
@@ -627,10 +635,10 @@ export class Cli<T extends ParsedArgs = any> {
 		process.env.YES = args.yes
 		process.env.DEBUG = args.debug
 
-		if (!this.state.hide_banner && (this.state.name || this.state.include_working_package)) {
+		if (!this.state.hide_banner && (this.$name || this.state.include_working_package)) {
 			let label
-			if (this.state.name) {
-				label = `{magenta}${this.state.name}{/magenta}`
+			if (this.$name) {
+				label = `{magenta}${this.$name}{/magenta}`
 
 				if (this.state.version) {
 					label += ` {magenta}v${this.state.version}{/magenta}`
