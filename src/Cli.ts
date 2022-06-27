@@ -38,11 +38,11 @@ export class Cli<T extends ParsedArgs = any> {
 
 		if (typeof nameOrArgs === 'string') {
 			name = nameOrArgs
-			args = (optionalArgsOrOptions || {}) as T
-			options = (optionalOptions || {}) as CLISettings
+			args = optionalArgsOrOptions as T | undefined
+			options = optionalOptions as CLISettings | undefined
 		} else {
-			args = (nameOrArgs || {}) as T
-			options = (optionalArgsOrOptions || {}) as CLISettings
+			args = nameOrArgs as T | undefined
+			options = optionalArgsOrOptions as CLISettings | undefined
 			name = options?.name
 		}
 
