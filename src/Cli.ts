@@ -82,10 +82,16 @@ export class Cli<T extends ParsedArgs = any> {
 	 */
 	config(options: CLISettings)
 
-	config<O extends keyof CLISettings>(optionOrOptions: CLISettings | O, value?: any): this {
+	config<O extends keyof CLISettings>(optionOrOptions: CLISettings | O, value?: any): State<T>[O] | this {
+		// multiple options
 		if (typeof optionOrOptions !== 'string') {
-			Object.assign(this.state, optionOrOptions)
-		} else {
+			const options = optionOrOptions as CLISettings
+			if (typeof options === 'object' && Object.keys(options).every(k => allowed_keys.includes(k))) {
+				this.state = {...this.state || default_state, ...options}
+			} else {
+				throw new Error('Invalid options')
+			}
+		} else { // single option
 			const option = optionOrOptions as O
 
 			if (value === void 0) {
