@@ -16,6 +16,7 @@ Simple Node.js CLI framework for creating command line applications.
 
 ### Accessors
 
+- [$name](Cli.md#$name)
 - [$out](Cli.md#$out)
 
 ### Methods
@@ -25,6 +26,7 @@ Simple Node.js CLI framework for creating command line applications.
 - [arg](Cli.md#arg)
 - [args](Cli.md#args)
 - [banner](Cli.md#banner)
+- [config](Cli.md#config)
 - [defaultAction](Cli.md#defaultaction)
 - [hideBanner](Cli.md#hidebanner)
 - [includeWorkingPackage](Cli.md#includeworkingpackage)
@@ -41,7 +43,7 @@ Simple Node.js CLI framework for creating command line applications.
 
 ### constructor
 
-• **new Cli**<`T`\>(`name?`)
+• **new Cli**<`T`\>(`args?`, `options?`)
 
 Create a new Cli instance.
 
@@ -55,23 +57,10 @@ Create a new Cli instance.
 
 | Name | Type |
 | :------ | :------ |
-| `name?` | `string` |
-
-• **new Cli**<`T`\>(`args?`)
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | extends [`ParsedArgs`](../interfaces/ParsedArgs.md) = `any` |
-
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
 | `args?` | `T` |
+| `options?` | [`CLISettings`](../interfaces/CLISettings.md) |
 
-• **new Cli**<`T`\>(`name?`, `args?`)
+• **new Cli**<`T`\>(`name?`, `args?`, `options?`)
 
 #### Type parameters
 
@@ -85,8 +74,19 @@ Create a new Cli instance.
 | :------ | :------ |
 | `name?` | `string` |
 | `args?` | `T` |
+| `options?` | [`CLISettings`](../interfaces/CLISettings.md) |
 
 ## Accessors
+
+### $name
+
+• `get` **$name**(): `string`
+
+#### Returns
+
+`string`
+
+___
 
 ### $out
 
@@ -226,6 +226,67 @@ Set the description / banner message of the application
 #### Returns
 
 [`Cli`](Cli.md)<`T`\>
+
+___
+
+### config
+
+▸ **config**<`O`\>(`option`, `value`): `any`
+
+Set a configuration option for the CLI
+
+**`throws`** {Error} - If the option is not supported
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `O` | extends keyof [`CLISettings`](../interfaces/CLISettings.md) |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `option` | `O` | The option to set |
+| `value` | `any` | The value to set the option to |
+
+#### Returns
+
+`any`
+
+▸ **config**<`O`\>(`option`): `any`
+
+Get the value of a configuration option for the CLI
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `O` | extends keyof [`CLISettings`](../interfaces/CLISettings.md) |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `option` | `O` | The option to get |
+
+#### Returns
+
+`any`
+
+▸ **config**(`options`): `any`
+
+Set configuration options for the CLI
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | [`CLISettings`](../interfaces/CLISettings.md) | The options to set. These will be merged with the current options. |
+
+#### Returns
+
+`any`
 
 ___
 

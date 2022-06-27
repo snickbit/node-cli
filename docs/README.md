@@ -16,6 +16,7 @@
 - [ActionDefinition](interfaces/ActionDefinition.md)
 - [Arg](interfaces/Arg.md)
 - [ArgChoice](interfaces/ArgChoice.md)
+- [CLISettings](interfaces/CLISettings.md)
 - [ImportedAction](interfaces/ImportedAction.md)
 - [Option](interfaces/Option.md)
 - [ParsedArgs](interfaces/ParsedArgs.md)
@@ -34,6 +35,7 @@
 
 ### Variables
 
+- [allowed\_keys](README.md#allowed_keys)
 - [default\_options](README.md#default_options)
 - [default\_state](README.md#default_state)
 - [extra\_options](README.md#extra_options)
@@ -119,6 +121,12 @@ ___
 
 ## Variables
 
+### allowed\_keys
+
+• `Const` **allowed\_keys**: `string`[]
+
+___
+
 ### default\_options
 
 • `Const` **default\_options**: [`CliOptions`](README.md#clioptions)
@@ -163,22 +171,10 @@ ___
 
 ### cli
 
-▸ **cli**(`name?`): [`Cli`](classes/Cli.md)
+▸ **cli**<`T`\>(`args?`, `options?`): [`Cli`](classes/Cli.md)
 
 Simple Node.js CLI framework for creating command line applications.
 
-#### Parameters
-
-| Name | Type |
-| :------ | :------ |
-| `name?` | `string` |
-
-#### Returns
-
-[`Cli`](classes/Cli.md)
-
-▸ **cli**<`T`\>(`args?`): [`Cli`](classes/Cli.md)
-
 #### Type parameters
 
 | Name | Type |
@@ -190,12 +186,13 @@ Simple Node.js CLI framework for creating command line applications.
 | Name | Type |
 | :------ | :------ |
 | `args?` | `T` |
+| `options?` | [`CLISettings`](interfaces/CLISettings.md) |
 
 #### Returns
 
 [`Cli`](classes/Cli.md)
 
-▸ **cli**<`T`\>(`name?`, `args?`): [`Cli`](classes/Cli.md)
+▸ **cli**<`T`\>(`name?`, `args?`, `options?`): [`Cli`](classes/Cli.md)
 
 #### Type parameters
 
@@ -209,6 +206,7 @@ Simple Node.js CLI framework for creating command line applications.
 | :------ | :------ |
 | `name?` | `string` |
 | `args?` | `T` |
+| `options?` | [`CLISettings`](interfaces/CLISettings.md) |
 
 #### Returns
 

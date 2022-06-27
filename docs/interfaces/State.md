@@ -6,10 +6,17 @@
 | :------ | :------ |
 | `T` | extends [`ParsedArgs`](ParsedArgs.md) = `any` |
 
+## Hierarchy
+
+- [`CLISettings`](CLISettings.md)
+
+  ↳ **`State`**
+
 ## Table of contents
 
 ### Properties
 
+- [action](State.md#action)
 - [actions](State.md#actions)
 - [args](State.md#args)
 - [argv](State.md#argv)
@@ -20,10 +27,17 @@
 - [include\_working\_package](State.md#include_working_package)
 - [name](State.md#name)
 - [options](State.md#options)
+- [out](State.md#out)
 - [parsed](State.md#parsed)
 - [version](State.md#version)
 
 ## Properties
+
+### action
+
+• `Optional` **action**: `string`
+
+___
 
 ### actions
 
@@ -45,7 +59,11 @@ ___
 
 ### bail
 
-• **bail**: `boolean`
+• `Optional` **bail**: `boolean`
+
+#### Inherited from
+
+[CLISettings](CLISettings.md).[bail](CLISettings.md#bail)
 
 ___
 
@@ -53,23 +71,39 @@ ___
 
 • `Optional` **banner**: `string`
 
+#### Inherited from
+
+[CLISettings](CLISettings.md).[banner](CLISettings.md#banner)
+
 ___
 
 ### cwd
 
-• **cwd**: `string`
+• `Optional` **cwd**: `string`
+
+#### Inherited from
+
+[CLISettings](CLISettings.md).[cwd](CLISettings.md#cwd)
 
 ___
 
 ### hide\_banner
 
-• **hide\_banner**: `boolean`
+• `Optional` **hide\_banner**: `boolean`
+
+#### Inherited from
+
+[CLISettings](CLISettings.md).[hide_banner](CLISettings.md#hide_banner)
 
 ___
 
 ### include\_working\_package
 
-• **include\_working\_package**: `boolean`
+• `Optional` **include\_working\_package**: `boolean`
+
+#### Inherited from
+
+[CLISettings](CLISettings.md).[include_working_package](CLISettings.md#include_working_package)
 
 ___
 
@@ -77,11 +111,25 @@ ___
 
 • `Optional` **name**: `string`
 
+#### Inherited from
+
+[CLISettings](CLISettings.md).[name](CLISettings.md#name)
+
 ___
 
 ### options
 
 • **options**: `Partial`<[`Options`](../README.md#options)\>
+
+___
+
+### out
+
+• `Optional` **out**: `Out`
+
+#### Inherited from
+
+[CLISettings](CLISettings.md).[out](CLISettings.md#out)
 
 ___
 
@@ -94,3 +142,7 @@ ___
 ### version
 
 • `Optional` **version**: `string` \| `number`
+
+#### Inherited from
+
+[CLISettings](CLISettings.md).[version](CLISettings.md#version)
