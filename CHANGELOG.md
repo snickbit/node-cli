@@ -1,5 +1,21 @@
 # @snickbit/node-cli
 
+## 1.1.0
+
+### Minor Changes
+
+- [1cac6b9](https://github.com/snickbit/node-cli/commit/1cac6b9) **docs**:  update
+- [795a3dd](https://github.com/snickbit/node-cli/commit/795a3dd) **test**:  add config tests
+- [32d60e0](https://github.com/snickbit/node-cli/commit/32d60e0) **chore**:  add comment
+- [b9246da](https://github.com/snickbit/node-cli/commit/b9246da) **fix**:  add action name in state instead of sharing with cli
+- [63c55a8](https://github.com/snickbit/node-cli/commit/63c55a8) **fix**:  improve config option handling
+- [bc5db99](https://github.com/snickbit/node-cli/commit/bc5db99) **fix**:  add specific name setter
+- [84551af](https://github.com/snickbit/node-cli/commit/84551af) **feat**:  add config getter
+- [1b56914](https://github.com/snickbit/node-cli/commit/1b56914) **fix**:  allow optionals to be undefined in constructor
+- [af87354](https://github.com/snickbit/node-cli/commit/af87354) **fix**:  add config option validation with allowed keys
+- [2a242ea](https://github.com/snickbit/node-cli/commit/2a242ea) **feat**:  add optional param for settings
+- [b1df615](https://github.com/snickbit/node-cli/commit/b1df615) **feat**:  add config method for easier settings adjustments
+
 ## 1.0.59
 
 ### Patch Changes
