@@ -408,6 +408,7 @@ export class Cli<T extends ParsedArgs = any> {
 	 */
 	showVersion() {
 		if (this.state.version) {
+			// use console.log instead of Out because we don't want any special formatting
 			console.log(`v${this.state.version}`)
 		}
 	}
