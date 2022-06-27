@@ -98,7 +98,12 @@ export class Cli<T extends ParsedArgs = any> {
 				} else {
 					this.appOut = new Out(value)
 				}
+			} else if (option === 'name') {
+				// Name specific setter
+				this.state.name = value
+				this.setOutName(value || 'node-cli')
 			} else if (allowed_keys.includes(option)) {
+				// General setter
 				this.state[option] = value
 			} else {
 				throw new Error(`Unknown option: ${option}`)
