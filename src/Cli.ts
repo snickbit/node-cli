@@ -71,6 +71,12 @@ export class Cli<T extends ParsedArgs = any> {
 	config<O extends keyof CLISettings>(option: O, value: any)
 
 	/**
+	 * Get the value of a configuration option for the CLI
+	 * @param option - The option to get
+	 */
+	config<O extends keyof CLISettings>(option: O)
+
+	/**
 	 * Set configuration options for the CLI
 	 * @param options - The options to set. These will be merged with the current options.
 	 */
@@ -82,7 +88,11 @@ export class Cli<T extends ParsedArgs = any> {
 		} else {
 			const option = optionOrOptions as O
 
-			if (option === 'out') {
+			if (value === void 0) {
+				// Getter
+				return this.state[option]
+			} else if (option === 'out') {
+				// Out specific setter
 				if (value instanceof Out) {
 					this.appOut = value
 				} else {
