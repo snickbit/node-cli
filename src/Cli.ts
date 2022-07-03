@@ -123,10 +123,18 @@ export class Cli<T extends ParsedArgs = any> {
 		return this.appOut || this.#out
 	}
 
+	/**
+	 * Set the name of the CLI.
+	 */
 	get $name(): string {
 		return this.asAction && this.state.action ? this.state.action : this.state.name
 	}
 
+	/**
+	 * Add a single action to the CLI.
+	 * @param action
+	 * @protected
+	 */
 	protected addAction(action: ActionDefinition): this {
 		if (Object.keys(action).length === 0) {
 			return
@@ -147,6 +155,10 @@ export class Cli<T extends ParsedArgs = any> {
 		}
 	}
 
+	/**
+	 * Parse the options definitions
+	 * @protected
+	 */
 	protected parseOptions() {
 		const opts: Partial<CliOptions> = {...default_options}
 
@@ -199,19 +211,28 @@ export class Cli<T extends ParsedArgs = any> {
 		return opts
 	}
 
+	/**
+	 * Set the name of the Out instance.
+	 * @param name
+	 * @protected
+	 */
 	protected setOutName(name: string): Out {
 		this.appPrefix = (this.appPrefix ? `${this.appPrefix}:` : '') + name
 		this.appOut = new Out(`[${this.appPrefix}]`, {verbosity: 0})
 		return this.appOut
 	}
 
+	/**
+	 * Clean the CLI state
+	 * @protected
+	 */
 	protected cleanState(): this {
 		this.state = objectClone(default_state) as State
 		return this
 	}
 
 	/**
-	 * Set the name of the application
+	 * Set the name of the CLI
 	 */
 	name(name: string): this {
 		if (this.asAction) {
@@ -226,7 +247,7 @@ export class Cli<T extends ParsedArgs = any> {
 	}
 
 	/**
-	 * Set the version of the application
+	 * Set the version of the CLI
 	 */
 	version(version: number | string): this {
 		this.state.version = version
@@ -234,7 +255,7 @@ export class Cli<T extends ParsedArgs = any> {
 	}
 
 	/**
-	 * Set the description / banner message of the application
+	 * Set the description / banner message of the CLI
 	 */
 	banner(message: string): this {
 		this.state.banner = message
@@ -435,7 +456,7 @@ export class Cli<T extends ParsedArgs = any> {
 	}
 
 	/**
-	 * Run an action defined in the CLI program
+	 * Run an action
 	 */
 	protected async runAction(args: T): Promise<any> {
 		const action = args.action
@@ -472,6 +493,10 @@ export class Cli<T extends ParsedArgs = any> {
 		}
 	}
 
+	/**
+	 * Parse the arguments
+	 * @protected
+	 */
 	protected async parseArgs(): Promise<T> {
 		let argv: any[] = this.state.argv || hideBin(process.argv)
 		const opts = this.parseOptions()
