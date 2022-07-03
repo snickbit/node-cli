@@ -57,10 +57,18 @@ export class Cli<T extends ParsedArgs = any> {
 		}
 
 		if (options) {
-			this.config(options)
+			this.set(options)
 		}
 
 		return $cli
+	}
+
+	/**
+	 * Get the value of a configuration option for the CLI
+	 * @param option - The option to get
+	 */
+	get<O extends keyof CLISettings>(option: O): State<T>[O] {
+		return this.state[option]
 	}
 
 	/**
@@ -69,21 +77,15 @@ export class Cli<T extends ParsedArgs = any> {
 	 * @param value - The value to set the option to
 	 * @throws {Error} - If the option is not supported
 	 */
-	config<O extends keyof CLISettings>(option: O, value: any)
-
-	/**
-	 * Get the value of a configuration option for the CLI
-	 * @param option - The option to get
-	 */
-	config<O extends keyof CLISettings>(option: O)
+	set<O extends keyof CLISettings>(option: O, value: any)
 
 	/**
 	 * Set configuration options for the CLI
 	 * @param options - The options to set. These will be merged with the current options.
 	 */
-	config(options: CLISettings)
+	set(options: CLISettings)
 
-	config<O extends keyof CLISettings>(optionOrOptions: CLISettings | O, value?: any): State<T>[O] | this {
+	set<O extends keyof CLISettings>(optionOrOptions: CLISettings | O, value?: any): State<T>[O] | this {
 		// multiple options
 		if (typeof optionOrOptions !== 'string') {
 			const options = optionOrOptions as CLISettings
@@ -95,10 +97,7 @@ export class Cli<T extends ParsedArgs = any> {
 		} else { // single option
 			const option = optionOrOptions as O
 
-			if (value === void 0) {
-				// Getter
-				return this.state[option]
-			} else if (option === 'out') {
+			if (option === 'out') {
 				// Out specific setter
 				if (value instanceof Out) {
 					this.appOut = value

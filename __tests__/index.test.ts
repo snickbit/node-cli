@@ -16,14 +16,14 @@ describe('cli', () => {
 	it('cli() should instance of Cli', () => expect(cli()).toBeInstanceOf(Cli))
 
 	describe('cli config', () => {
-		it('cli(null, data) should have name ' + data.name, () => expect(cli(null, data).config('name')).toBe(data.name))
-		it('cli(' + data.name + ') should have name ' + data.name, () => expect(cli(data.name).config('name')).toBe(data.name))
+		it('cli(null, data) should have name ' + data.name, () => expect(cli(null, data).get('name')).toBe(data.name))
+		it('cli(' + data.name + ') should have name ' + data.name, () => expect(cli(data.name).get('name')).toBe(data.name))
 
 		for(let key in data) {
-			it('cli().config(' + key + ', ' + data[key] + ') should have ' + key + ' ' + data[key], () => {
+			it('cli().set(' + key + ', ' + data[key] + ') should have ' + key + ' ' + data[key], () => {
 				const option = key as keyof CLISettings
-				const instance = cli().config(option, data[key])
-				expect(instance.config(option)).toBe(data[key])
+				const instance = cli().set(option, data[key])
+				expect(instance.get(option)).toBe(data[key])
 			})
 		}
 	})
