@@ -37,6 +37,8 @@ export class Cli<T extends ParsedArgs = any> {
 		let args: T
 		let options: CLISettings
 
+		$cli.#out.debug('Initializing CLI')
+
 		if (typeof nameOrArgs === 'string') {
 			name = nameOrArgs
 			args = optionalArgsOrOptions as T | undefined
@@ -48,16 +50,19 @@ export class Cli<T extends ParsedArgs = any> {
 		}
 
 		if (args) {
+			$cli.#out.debug('Args provided, setting state and asAction')
 			Object.assign($cli.state.parsed, args)
-			this.asAction = true
+			$cli.asAction = true
 		}
 
 		if (name) {
+			$cli.#out.debug('Name provided, setting')
 			$cli.name(name)
 		}
 
 		if (options) {
-			this.set(options)
+			$cli.#out.debug('Options provided, setting')
+			$cli.set(options)
 		}
 
 		return $cli
