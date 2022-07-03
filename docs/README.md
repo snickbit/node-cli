@@ -45,6 +45,7 @@
 
 - [chunkArguments](README.md#chunkarguments)
 - [cli](README.md#cli)
+- [loadedConfig](README.md#loadedconfig)
 - [parseDelimited](README.md#parsedelimited)
 
 ## References
@@ -211,6 +212,22 @@ Simple Node.js CLI framework for creating command line applications.
 #### Returns
 
 [`Cli`](classes/Cli.md)
+
+___
+
+### loadedConfig
+
+▸ **loadedConfig**(`conf?`): `any`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `conf?` | `any` |
+
+#### Returns
+
+`any`
 
 ___
 

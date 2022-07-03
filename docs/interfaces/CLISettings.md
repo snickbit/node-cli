@@ -12,6 +12,7 @@
 
 - [bail](CLISettings.md#bail)
 - [banner](CLISettings.md#banner)
+- [config](CLISettings.md#config)
 - [cwd](CLISettings.md#cwd)
 - [hide\_banner](CLISettings.md#hide_banner)
 - [include\_working\_package](CLISettings.md#include_working_package)
@@ -30,6 +31,12 @@ ___
 ### banner
 
 • `Optional` **banner**: `string`
+
+___
+
+### config
+
+• `Optional` **config**: `Options`
 
 ___
 

@@ -22,6 +22,7 @@
 - [argv](State.md#argv)
 - [bail](State.md#bail)
 - [banner](State.md#banner)
+- [config](State.md#config)
 - [cwd](State.md#cwd)
 - [hide\_banner](State.md#hide_banner)
 - [include\_working\_package](State.md#include_working_package)
@@ -74,6 +75,16 @@ ___
 #### Inherited from
 
 [CLISettings](CLISettings.md).[banner](CLISettings.md#banner)
+
+___
+
+### config
+
+• `Optional` **config**: `Options`
+
+#### Inherited from
+
+[CLISettings](CLISettings.md).[config](CLISettings.md#config)
 
 ___
 

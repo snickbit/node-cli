@@ -28,6 +28,7 @@ Simple Node.js CLI framework for creating command line applications.
 - [banner](Cli.md#banner)
 - [config](Cli.md#config)
 - [defaultAction](Cli.md#defaultaction)
+- [get](Cli.md#get)
 - [hideBanner](Cli.md#hidebanner)
 - [includeWorkingPackage](Cli.md#includeworkingpackage)
 - [name](Cli.md#name)
@@ -35,6 +36,7 @@ Simple Node.js CLI framework for creating command line applications.
 - [option](Cli.md#option)
 - [options](Cli.md#options)
 - [run](Cli.md#run)
+- [set](Cli.md#set)
 - [showHelp](Cli.md#showhelp)
 - [showVersion](Cli.md#showversion)
 - [version](Cli.md#version)
@@ -82,6 +84,8 @@ Create a new Cli instance.
 
 • `get` **$name**(): `string`
 
+Set the name of the CLI.
+
 #### Returns
 
 `string`
@@ -91,6 +95,8 @@ ___
 ### $out
 
 • `get` **$out**(): `Out`
+
+Get the app Out instance, or fallback to the default Out instance.
 
 #### Returns
 
@@ -215,7 +221,7 @@ ___
 
 ▸ **banner**(`message`): [`Cli`](Cli.md)<`T`\>
 
-Set the description / banner message of the application
+Set the description / banner message of the CLI
 
 #### Parameters
 
@@ -231,62 +237,21 @@ ___
 
 ### config
 
-▸ **config**<`O`\>(`option`, `value`): `any`
+▸ **config**(`options?`): [`Cli`](Cli.md)<`T`\>
 
-Set a configuration option for the CLI
+Enable config file support for the CLI, and define searching options.
 
-**`throws`** {Error} - If the option is not supported
+**`see`** [https://github.com/antonk52/lilconfig](https://github.com/antonk52/lilconfig)
 
-#### Type parameters
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `O` | extends keyof [`CLISettings`](../interfaces/CLISettings.md) |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `option` | `O` | The option to set |
-| `value` | `any` | The value to set the option to |
+| `options?` | ``false`` \| `Options` |
 
 #### Returns
 
-`any`
-
-▸ **config**<`O`\>(`option`): `any`
-
-Get the value of a configuration option for the CLI
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `O` | extends keyof [`CLISettings`](../interfaces/CLISettings.md) |
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `option` | `O` | The option to get |
-
-#### Returns
-
-`any`
-
-▸ **config**(`options`): `any`
-
-Set configuration options for the CLI
-
-#### Parameters
-
-| Name | Type | Description |
-| :------ | :------ | :------ |
-| `options` | [`CLISettings`](../interfaces/CLISettings.md) | The options to set. These will be merged with the current options. |
-
-#### Returns
-
-`any`
+[`Cli`](Cli.md)<`T`\>
 
 ___
 
@@ -305,6 +270,30 @@ Set the default action
 #### Returns
 
 [`Cli`](Cli.md)<`T`\>
+
+___
+
+### get
+
+▸ **get**<`O`\>(`option`): [`State`](../interfaces/State.md)<`T`\>[`O`]
+
+Get the value of a configuration option for the CLI
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `O` | extends keyof [`CLISettings`](../interfaces/CLISettings.md) |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `option` | `O` | The option to get |
+
+#### Returns
+
+[`State`](../interfaces/State.md)<`T`\>[`O`]
 
 ___
 
@@ -348,7 +337,7 @@ ___
 
 ▸ **name**(`name`): [`Cli`](Cli.md)<`T`\>
 
-Set the name of the application
+Set the name of the CLI
 
 #### Parameters
 
@@ -419,7 +408,7 @@ ___
 
 ### run
 
-▸ **run**(`callback?`): `Promise`<`any`\>
+▸ **run**(`callback?`): `any`
 
 Run the CLI program, parsing the argv, and running any defined actions
 
@@ -431,7 +420,48 @@ Run the CLI program, parsing the argv, and running any defined actions
 
 #### Returns
 
-`Promise`<`any`\>
+`any`
+
+___
+
+### set
+
+▸ **set**<`O`\>(`option`, `value`): `any`
+
+Set a configuration option for the CLI
+
+**`throws`** {Error} - If the option is not supported
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `O` | extends keyof [`CLISettings`](../interfaces/CLISettings.md) |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `option` | `O` | The option to set |
+| `value` | `any` | The value to set the option to |
+
+#### Returns
+
+`any`
+
+▸ **set**(`options`): `any`
+
+Set configuration options for the CLI
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `options` | [`CLISettings`](../interfaces/CLISettings.md) | The options to set. These will be merged with the current options. |
+
+#### Returns
+
+`any`
 
 ___
 
@@ -463,7 +493,7 @@ ___
 
 ▸ **version**(`version`): [`Cli`](Cli.md)<`T`\>
 
-Set the version of the application
+Set the version of the CLI
 
 #### Parameters
 

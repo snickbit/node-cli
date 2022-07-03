@@ -16,13 +16,14 @@
 
 ### Action
 
-▸ **Action**(`args`): `any`
+▸ **Action**(`args`, `config`): `any`
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `args` | `T` |
+| `config` | `any` |
 
 #### Returns
 

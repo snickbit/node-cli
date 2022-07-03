@@ -8,6 +8,7 @@
 - [\_\_](ParsedArgs.md#__)
 - [\_action](ParsedArgs.md#_action)
 - [action](ParsedArgs.md#action)
+- [config](ParsedArgs.md#config)
 - [debug](ParsedArgs.md#debug)
 - [force](ParsedArgs.md#force)
 - [help](ParsedArgs.md#help)
@@ -38,6 +39,12 @@ ___
 ### action
 
 • `Optional` **action**: `string`
+
+___
+
+### config
+
+• `Optional` **config**: `string`
 
 ___
 
