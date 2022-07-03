@@ -2,8 +2,9 @@ import {fileExists, findUp, getFileJson, parseImports} from '@snickbit/node-util
 import {Out} from '@snickbit/out'
 import {arrayWrap, camelCase, isArray, isEmpty, isNumber, kebabCase, objectClone, objectFindKey, parseOptions, typeOf} from '@snickbit/utilities'
 import {Action, ActionDefinition, Actions, Arg, Args, CLISettings, Option, Options, ParsedArgs, RawActions, State} from './definitions'
-import {allowed_keys, default_state} from './config'
+import {allowed_keys, default_state, loadedConfig} from './config'
 import {chunkArguments, CliOption, CliOptions, default_options, extra_options, formatValue, helpOut, hideBin, object_options, option_not_predicate, options_equal_predicate, parseDelimited, printLine, space} from './helpers'
+import {lilconfig, LilconfigResult, Options as ConfigOptions} from 'lilconfig'
 import parser from 'yargs-parser'
 
 /**
@@ -124,6 +125,40 @@ export class Cli<T extends ParsedArgs = any> {
 		return this
 	}
 
+	/**
+	 * Enable config file support for the CLI, and define searching options.
+	 * @param [options]
+	 * @see {@link https://github.com/antonk52/lilconfig}
+	 */
+	config(options?: ConfigOptions | false): this {
+		if (options !== false) {
+			options = options || {}
+			this.state.config = options
+
+			if (!this.state.options['config']) {
+				this.option('config', 		{
+					alias: 'c',
+					describe: 'Configuration file path',
+					type: 'string',
+					preset: true
+				})
+			}
+		} else {
+			if (this.state.config) {
+				delete this.state.config
+			}
+
+			if (this.state.options['config'] && this.state.options['config'].preset) {
+				delete this.state.options['config']
+			}
+		}
+
+		return this
+	}
+
+	/**
+	 * Get the app Out instance, or fallback to the default Out instance.
+	 */
 	get $out() {
 		return this.appOut || this.#out
 	}
@@ -463,7 +498,7 @@ export class Cli<T extends ParsedArgs = any> {
 	/**
 	 * Run an action
 	 */
-	protected async runAction(args: T): Promise<any> {
+	protected async runAction(args: T, config: any): Promise<any> {
 		const action = args.action
 		args._action = action
 		delete args.action
@@ -487,7 +522,7 @@ export class Cli<T extends ParsedArgs = any> {
 
 			this.cleanState()
 
-			return await handler(args)
+			return await handler(args, config)
 		} catch (e) {
 			if (this.state.bail) {
 				this.$out.fatal(`Action ${action} failed`, e)
@@ -713,26 +748,85 @@ export class Cli<T extends ParsedArgs = any> {
 	/**
 	 * Run the CLI program, parsing the argv, and running any defined actions
 	 */
-	async run(callback?: Action): Promise<any> {
+	run(callback?: Action): Promise<any> | any {
 		this.hasRun = true
 		const args = this.parseArgs()
 
-		if (this.state.actions && Object.keys(this.state.actions).length && args.action) {
-			this.#out.debug('Found action and action definitions, running action')
-			return this.runAction(args)
-		} else if (args.version) {
+		if (args.version) {
 			return this.showVersion()
 		} else if (args.help) {
 			return this.showHelp()
-		} else if (callback) {
-			this.#out.debug('Sending args to callback')
-			this.cleanState()
-			return callback(args)
 		}
 
-		this.#out.debug('Run complete, returning args')
-		this.cleanState()
+		return this.getConfig(args).then(config => {
+			if (this.state.actions && Object.keys(this.state.actions).length && args.action) {
+				this.#out.debug('Found action and action definitions, running action')
+				return this.runAction(args, config)
+			} else if (callback) {
+				this.#out.debug('Sending args to callback')
+				this.cleanState()
+				return callback(args, config)
+			}
+			this.#out.debug('Nothing to run, returning args as resolved promise')
+			this.cleanState()
 
-		return args
+			return {...config, ...args}
+		}).catch(err => {
+			this.#out.fatal(err)
+		})
+	}
+
+	protected async getConfig(args: T): Promise<any> {
+		this.#out.debug('Checking for config')
+
+		// Initialize config
+		let config: any = {}
+
+		// Search for the file with options
+		if (this.state.config) {
+			this.#out.debug('Searching for config file')
+
+			// initialize lilconfig
+			const finder = lilconfig(this.$name, this.state.config)
+
+			let result: LilconfigResult
+
+			// Try to load the config file
+			if (args.config) {
+				if (!fileExists(args.config)) {
+					this.$out.fatal(`Config file ${args.config} does not exist`)
+				}
+
+				result = await finder.load(args.config)
+			} else {
+				result = await finder.search()
+			}
+
+			// If we found a config file, load it
+			if (result) {
+				config = result.config
+			} else {
+				this.$out.warn('No config file found.')
+			}
+		} else if (this.asAction) {
+			this.#out.debug('Checking for previously loaded config file')
+			config = loadedConfig() || {}
+		} else {
+			this.#out.warn('No config found.', `asAction: ${this.asAction}`)
+			return {}
+		}
+
+		// Override config with args
+		this.#out.debug('Overriding config with CLI args')
+		for (const key of Object.keys(args)) {
+			if (key in config && args[key] !== undefined) {
+				config[key] = args[key]
+			}
+		}
+
+		// Save the config, so it can be loaded by child commands
+		loadedConfig(config)
+
+		return config
 	}
 }

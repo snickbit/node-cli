@@ -1,5 +1,6 @@
 import {ImportMethod, ImportRecords, ParsedImport, RecordOfImportRecords} from '@snickbit/node-utilities'
 import {Out} from '@snickbit/out'
+import {Options as ConfigOptions} from 'lilconfig'
 
 export type ArgV = string[]
 
@@ -12,6 +13,7 @@ export interface ParsedArgs {
 	yes: boolean
 	help: boolean
 	version: boolean
+	config?: string
 	action?: string
 	_action?: string
 }
@@ -48,7 +50,7 @@ interface ActionBase {
 export type ActionFunction<T extends ParsedArgs = any> = ((args: T) => Promise<any> | any) | {default: ActionFunction<T>}
 
 export interface Action<T extends ParsedArgs = any> extends ActionBase {
-	(args: T): Promise<any> | any
+	(args: T, config: any): any
 }
 
 export interface ImportedAction<T extends ParsedArgs = any> extends ActionBase {
@@ -81,6 +83,7 @@ export interface CLISettings {
 	name?: string
 	out?: Out
 	version?: number | string
+	config?: ConfigOptions
 }
 
 export interface State<T extends ParsedArgs = any> extends CLISettings {

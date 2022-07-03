@@ -70,3 +70,12 @@ export const default_state: State = {
 		}
 	}
 }
+
+let loaded_config: any
+export function loadedConfig(conf?: any) {
+	if (conf) {
+		loaded_config = conf
+	} else {
+		return loaded_config
+	}
+}

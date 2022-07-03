@@ -64,7 +64,12 @@ export const default_options: CliOptions = {
 
 export const object_options = ['alias', 'default']
 
-export const extra_options = ['describe', 'description', 'delimited']
+export const extra_options = [
+	'describe',
+	'description',
+	'delimited',
+	'preset'
+]
 
 export function parseDelimited(value) {
 	const results = []
