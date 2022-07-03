@@ -16,6 +16,7 @@
 	],
 	"scripts": {
 		"build": "tsup",
+		"build:examples": "tsup examples/**/*.ts --outDir dist/examples --format cjs",
 		"clean": "shx rm -rf ./dist",
 		"depcheck": "depcheck",
 		"dev": "pnpm run build --sourcemap",
@@ -24,7 +25,8 @@
 		"meta": "pnpm run prod --metafile",
 		"prod": "pnpm run build --minify",
 		"test": "jest",
-		"watch": "pnpm run dev --watch"
+		"watch": "pnpm run dev --watch",
+		"watch:examples": "pnpm run build:examples --watch"
 	},
 	"jest": {
 		"preset": "ts-jest",
@@ -62,5 +64,9 @@
 			"esm",
 			"cjs"
 		]
+	},
+	"my-cli": {
+		"src": "./src/cli.ts",
+		"dest": "./dist/cli.js"
 	}
 }
