@@ -26,6 +26,9 @@ export interface Arg {
 	default: any
 	delimited?: boolean
 	required?: boolean
+
+	/** @internal */
+	preset?: boolean
 }
 
 export interface ArgChoice {

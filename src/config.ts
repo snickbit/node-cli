@@ -31,36 +31,42 @@ export const default_state: State = {
 			alias: 'v',
 			describe: 'Allowed verbosity level',
 			type: 'count',
-			default: 0
+			default: 0,
+			preset: true
 		},
 		debug: {
 			alias: 'd',
 			describe: 'Debug output',
 			type: 'boolean',
-			default: false
+			default: false,
+			preset: true
 		},
 		force: {
 			alias: 'f',
 			describe: 'Force command',
 			type: 'boolean',
-			default: false
+			default: false,
+			preset: true
 		},
 		yes: {
 			alias: 'y',
 			describe: 'Answer yes to all prompts',
 			type: 'boolean',
-			default: false
+			default: false,
+			preset: true
 		},
 		help: {
 			alias: 'h',
 			describe: 'Show help',
 			type: 'boolean',
-			default: false
+			default: false,
+			preset: true
 		},
 		version: {
 			describe: 'Show version',
 			type: 'boolean',
-			default: false
+			default: false,
+			preset: true
 		}
 	}
 }
