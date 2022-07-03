@@ -502,7 +502,7 @@ export class Cli<T extends ParsedArgs = any> {
 	 * Parse the arguments
 	 * @protected
 	 */
-	protected async parseArgs(): Promise<T> {
+	protected parseArgs(): T {
 		let argv: any[] = this.state.argv || hideBin(process.argv)
 		const opts = this.parseOptions()
 		let preparsed = {} as T
@@ -715,7 +715,7 @@ export class Cli<T extends ParsedArgs = any> {
 	 */
 	async run(callback?: Action): Promise<any> {
 		this.hasRun = true
-		const args = await this.parseArgs()
+		const args = this.parseArgs()
 
 		if (this.state.actions && Object.keys(this.state.actions).length && args.action) {
 			this.#out.debug('Found action and action definitions, running action')
