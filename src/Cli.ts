@@ -496,41 +496,34 @@ export class Cli<T extends ParsedArgs = any> {
 	}
 
 	/**
-	 * Run an action
+	 * Run the CLI program, parsing the argv, and running any defined actions
 	 */
-	protected async runAction(args: T, config: any): Promise<any> {
-		const action = args.action
-		args._action = action
-		delete args.action
-		if (typeOf(action) !== 'string') {
-			this.$out.fatal('Argument \'action\' must be a string.', args)
+	run(callback?: Action): Promise<any> | any {
+		this.hasRun = true
+		const args = this.parseArgs()
+
+		if (args.version) {
+			return this.showVersion()
+		} else if (args.help) {
+			return this.showHelp()
 		}
 
-		const _action = this.getAction(action)
-		if (!_action) {
-			this.$out.fatal(`Unknown action: ${action}`, 'Available actions:', Object.keys(this.state.actions).join(', '))
-		}
-
-		this.#out.debug(`Running action: ${action}`)
-		this.setOutName(action)
-
-		try {
-			const handler = _action.handler
-			if (!handler) {
-				this.#out.extra(_action).fatal(`Action ${action} does not have a handler`)
+		return this.getConfig(args).then(config => {
+			if (this.state.actions && Object.keys(this.state.actions).length && args.action) {
+				this.#out.debug('Found action and action definitions, running action')
+				return this.runAction(args, config)
+			} else if (callback) {
+				this.#out.debug('Sending args to callback')
+				this.cleanState()
+				return callback(args, config)
 			}
-
+			this.#out.debug('Nothing to run, returning args as resolved promise')
 			this.cleanState()
 
-			return await handler(args, config)
-		} catch (e) {
-			if (this.state.bail) {
-				this.$out.fatal(`Action ${action} failed`, e)
-			} else {
-				this.$out.error(`Action ${action} failed`, e)
-				return false
-			}
-		}
+			return {...config, ...args}
+		}).catch(err => {
+			this.#out.fatal(err)
+		})
 	}
 
 	/**
@@ -746,34 +739,41 @@ export class Cli<T extends ParsedArgs = any> {
 	}
 
 	/**
-	 * Run the CLI program, parsing the argv, and running any defined actions
+	 * Run an action
 	 */
-	run(callback?: Action): Promise<any> | any {
-		this.hasRun = true
-		const args = this.parseArgs()
-
-		if (args.version) {
-			return this.showVersion()
-		} else if (args.help) {
-			return this.showHelp()
+	protected async runAction(args: T, config: any): Promise<any> {
+		const action = args.action
+		args._action = action
+		delete args.action
+		if (typeOf(action) !== 'string') {
+			this.$out.fatal('Argument \'action\' must be a string.', args)
 		}
 
-		return this.getConfig(args).then(config => {
-			if (this.state.actions && Object.keys(this.state.actions).length && args.action) {
-				this.#out.debug('Found action and action definitions, running action')
-				return this.runAction(args, config)
-			} else if (callback) {
-				this.#out.debug('Sending args to callback')
-				this.cleanState()
-				return callback(args, config)
+		const _action = this.getAction(action)
+		if (!_action) {
+			this.$out.fatal(`Unknown action: ${action}`, 'Available actions:', Object.keys(this.state.actions).join(', '))
+		}
+
+		this.#out.debug(`Running action: ${action}`)
+		this.setOutName(action)
+
+		try {
+			const handler = _action.handler
+			if (!handler) {
+				this.#out.extra(_action).fatal(`Action ${action} does not have a handler`)
 			}
-			this.#out.debug('Nothing to run, returning args as resolved promise')
+
 			this.cleanState()
 
-			return {...config, ...args}
-		}).catch(err => {
-			this.#out.fatal(err)
-		})
+			return await handler(args, config)
+		} catch (e) {
+			if (this.state.bail) {
+				this.$out.fatal(`Action ${action} failed`, e)
+			} else {
+				this.$out.error(`Action ${action} failed`, e)
+				return false
+			}
+		}
 	}
 
 	protected async getConfig(args: T): Promise<any> {
