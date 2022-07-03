@@ -54,6 +54,10 @@
 	"engines": {
 		"node": ">= 12"
 	},
+	"my-cli": {
+		"src": "./src/cli.ts",
+		"dest": "./dist/cli.js"
+	},
 	"tsup": {
 		"entry": [
 			"src/index.ts"
@@ -64,9 +68,5 @@
 			"esm",
 			"cjs"
 		]
-	},
-	"my-cli": {
-		"src": "./src/cli.ts",
-		"dest": "./dist/cli.js"
 	}
 }
