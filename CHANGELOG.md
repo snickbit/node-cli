@@ -1,5 +1,21 @@
 # @snickbit/node-cli
 
+## 2.0.0
+
+### Major Changes
+
+- [23ab0f5](https://github.com/snickbit/node-cli/commit/23ab0f5) **docs**:  update
+- [1b5491e](https://github.com/snickbit/node-cli/commit/1b5491e) **style**:  lint
+- [1af49cc](https://github.com/snickbit/node-cli/commit/1af49cc) **docs**:  add example
+- [2c5aa29](https://github.com/snickbit/node-cli/commit/2c5aa29) **style**:  lint
+- [2b3ae9e](https://github.com/snickbit/node-cli/commit/2b3ae9e) **feat**:  add ability to load config files using config() method and lilconfig
+- [04190e6](https://github.com/snickbit/node-cli/commit/04190e6) **fix**:  make parseArgs synchronous
+- [0a3399b](https://github.com/snickbit/node-cli/commit/0a3399b) **fix**:  remove use of 'this' in constructor, replace with single instance proxy
+- [fe565ed](https://github.com/snickbit/node-cli/commit/fe565ed) **feat**:  switch from a single config method to separate get and set methods for settings.
+- [6cf38b8](https://github.com/snickbit/node-cli/commit/6cf38b8) **fix**:  add hasRun property
+- [70e3a9b](https://github.com/snickbit/node-cli/commit/70e3a9b) **docs**:  update jsdocs
+- [39f60c8](https://github.com/snickbit/node-cli/commit/39f60c8) **fix**:  add internal preset property to options and args
+
 ## 1.1.0
 
 ### Minor Changes
