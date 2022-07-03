@@ -15,6 +15,7 @@ export class Cli<T extends ParsedArgs = any> {
 	protected appOut: Out
 	protected asAction = false
 	protected state: State<T>
+	protected hasRun = false
 	private static _instance: Cli
 
 	/**
@@ -709,6 +710,7 @@ export class Cli<T extends ParsedArgs = any> {
 	 * Run the CLI program, parsing the argv, and running any defined actions
 	 */
 	async run(callback?: Action): Promise<any> {
+		this.hasRun = true
 		const args = await this.parseArgs()
 
 		if (this.state.actions && Object.keys(this.state.actions).length && args.action) {
