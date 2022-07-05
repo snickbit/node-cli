@@ -1,11 +1,5 @@
 # Interface: Arg
 
-## Hierarchy
-
-- **`Arg`**
-
-  ↳ [`Option`](Option.md)
-
 ## Table of contents
 
 ### Properties
@@ -28,7 +22,7 @@ ___
 
 ### default
 
-• **default**: `any`
+• **default**: [`ArgDefault`](../README.md#argdefault)
 
 ___
 
@@ -58,4 +52,4 @@ ___
 
 ### type
 
-• **type**: `string`
+• **type**: [`ArgType`](../README.md#argtype)

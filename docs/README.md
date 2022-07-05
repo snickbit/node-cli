@@ -26,10 +26,14 @@
 
 - [ActionFunction](README.md#actionfunction)
 - [Actions](README.md#actions)
+- [ArgDefault](README.md#argdefault)
+- [ArgType](README.md#argtype)
 - [ArgV](README.md#argv)
 - [Args](README.md#args)
 - [CliOption](README.md#clioption)
 - [CliOptions](README.md#clioptions)
+- [OptionDefault](README.md#optiondefault)
+- [OptionType](README.md#optiontype)
 - [Options](README.md#options)
 - [RawActions](README.md#rawactions)
 
@@ -80,9 +84,23 @@ ___
 
 ___
 
+### ArgDefault
+
+Ƭ **ArgDefault**: `string`[] \| `string`
+
+___
+
+### ArgType
+
+Ƭ **ArgType**: ``"array"`` \| ``"string"``
+
+___
+
 ### ArgV
 
 Ƭ **ArgV**: `string`[]
+
+Options and Arguments
 
 ___
 
@@ -101,6 +119,18 @@ ___
 ### CliOptions
 
 Ƭ **CliOptions**: `Options` & `Record`<`string`, `any`\>
+
+___
+
+### OptionDefault
+
+Ƭ **OptionDefault**: [`ArgDefault`](README.md#argdefault) \| `boolean` \| `number`
+
+___
+
+### OptionType
+
+Ƭ **OptionType**: [`ArgType`](README.md#argtype) \| ``"boolean"`` \| ``"count"`` \| ``"number"``
 
 ___
 

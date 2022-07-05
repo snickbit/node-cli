@@ -2,7 +2,7 @@
 
 ## Hierarchy
 
-- [`Arg`](Arg.md)
+- `Omit`<[`Arg`](Arg.md), ``"default"`` \| ``"type"``\>
 
   ↳ **`Option`**
 
@@ -33,17 +33,13 @@ ___
 
 #### Inherited from
 
-[Arg](Arg.md).[choices](Arg.md#choices)
+Omit.choices
 
 ___
 
 ### default
 
-• **default**: `any`
-
-#### Inherited from
-
-[Arg](Arg.md).[default](Arg.md#default)
+• **default**: [`OptionDefault`](../README.md#optiondefault)
 
 ___
 
@@ -53,7 +49,7 @@ ___
 
 #### Inherited from
 
-[Arg](Arg.md).[delimited](Arg.md#delimited)
+Omit.delimited
 
 ___
 
@@ -63,7 +59,7 @@ ___
 
 #### Inherited from
 
-[Arg](Arg.md).[describe](Arg.md#describe)
+Omit.describe
 
 ___
 
@@ -73,7 +69,7 @@ ___
 
 #### Inherited from
 
-[Arg](Arg.md).[description](Arg.md#description)
+Omit.description
 
 ___
 
@@ -83,14 +79,10 @@ ___
 
 #### Inherited from
 
-[Arg](Arg.md).[required](Arg.md#required)
+Omit.required
 
 ___
 
 ### type
 
-• **type**: `string`
-
-#### Inherited from
-
-[Arg](Arg.md).[type](Arg.md#type)
+• **type**: [`OptionType`](../README.md#optiontype)
