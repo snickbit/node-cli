@@ -1,5 +1,13 @@
 # @snickbit/node-cli
 
+## 2.0.1
+
+### Patch Changes
+
+- [da5dac9](https://github.com/snickbit/node-cli/commit/da5dac9) **docs**:  update
+- [182e14a](https://github.com/snickbit/node-cli/commit/182e14a) **fix**:  add type check
+- [8df9de3](https://github.com/snickbit/node-cli/commit/8df9de3) **fix**:  add stricter type definitions and reorganize
+
 ## 2.0.0
 
 ### Major Changes
