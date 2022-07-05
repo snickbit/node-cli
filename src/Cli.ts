@@ -237,7 +237,7 @@ export class Cli<T extends ParsedArgs = any> {
 						pushOpts(key, value)
 						pushKey(opt)
 					}
-				} else if (key === 'type' && value in opts) {
+				} else if (key === 'type' && typeof value === 'string' && value in opts) {
 					if (!opts[value]) {
 						opts[value] = []
 					}
