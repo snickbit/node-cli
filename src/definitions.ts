@@ -2,6 +2,8 @@ import {ImportMethod, ImportRecords, ParsedImport, RecordOfImportRecords} from '
 import {Out} from '@snickbit/out'
 import {Options as ConfigOptions} from 'lilconfig'
 
+/** Options and Arguments **/
+
 export type ArgV = string[]
 
 export interface ParsedArgs {
@@ -18,14 +20,25 @@ export interface ParsedArgs {
 	_action?: string
 }
 
-export type Args = Record<string, Partial<Arg>>
+export type ArgType = 'array' | 'string'
+
+export type ArgDefault = string[] | string
+
+export type OptionType = ArgType | 'boolean' | 'count' | 'number'
+
+export type OptionDefault = ArgDefault | boolean | number
+
+export interface ArgChoice {
+	name: string
+	value: number | string
+}
 
 export interface Arg {
 	describe?: string
 	description?: string
 	choices?: ArgChoice[] | string[]
-	type: string
-	default: any
+	type: ArgType
+	default: ArgDefault
 	delimited?: boolean
 	required?: boolean
 
@@ -33,10 +46,17 @@ export interface Arg {
 	preset?: boolean
 }
 
-export interface ArgChoice {
-	name: string
-	value: number | string
+export interface Option extends Omit<Arg, 'default' | 'type'> {
+	alias: string[] | string
+	type: OptionType
+	default: OptionDefault
 }
+
+export type Args = Record<string, Partial<Arg>>
+
+export type Options = Record<string, Partial<Option>>
+
+/** Actions **/
 
 interface ActionBase {
 	key?: string
@@ -68,11 +88,7 @@ export type Actions<T extends ParsedArgs = any> = Record<string, | ActionDefinit
 
 export type RawActions<T extends ParsedArgs = any> = Actions | ImportRecords<T> | RecordOfImportRecords<T> | any
 
-export type Options = Record<string, Partial<Option>>
-
-export interface Option extends Arg {
-	alias: string[] | string
-}
+/** Settings and State **/
 
 export interface CLISettings {
 	bail?: boolean
