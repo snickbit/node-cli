@@ -8,7 +8,8 @@ export const allowed_keys = [
 	'include_working_package',
 	'name',
 	'out',
-	'version'
+	'version',
+	'default_config'
 ]
 
 export const default_state: State = {
