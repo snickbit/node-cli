@@ -1,14 +1,15 @@
-# Interface: State<T\>
+# Interface: State<T, C\>
 
 ## Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | extends [`ParsedArgs`](ParsedArgs.md) = `any` |
+| `C` | `any` |
 
 ## Hierarchy
 
-- [`CLISettings`](CLISettings.md)
+- [`CLISettings`](CLISettings.md)<`C`\>
 
   ↳ **`State`**
 
@@ -24,6 +25,7 @@
 - [banner](State.md#banner)
 - [config](State.md#config)
 - [cwd](State.md#cwd)
+- [default\_config](State.md#default_config)
 - [hide\_banner](State.md#hide_banner)
 - [include\_working\_package](State.md#include_working_package)
 - [name](State.md#name)
@@ -95,6 +97,16 @@ ___
 #### Inherited from
 
 [CLISettings](CLISettings.md).[cwd](CLISettings.md#cwd)
+
+___
+
+### default\_config
+
+• **default\_config**: `C`
+
+#### Inherited from
+
+[CLISettings](CLISettings.md).[default_config](CLISettings.md#default_config)
 
 ___
 

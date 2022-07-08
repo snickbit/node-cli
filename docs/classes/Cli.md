@@ -60,7 +60,7 @@ Create a new Cli instance.
 | Name | Type |
 | :------ | :------ |
 | `args?` | `T` |
-| `options?` | [`CLISettings`](../interfaces/CLISettings.md) |
+| `options?` | [`CLISettings`](../interfaces/CLISettings.md)<`any`\> |
 
 • **new Cli**<`T`\>(`name?`, `args?`, `options?`)
 
@@ -76,7 +76,7 @@ Create a new Cli instance.
 | :------ | :------ |
 | `name?` | `string` |
 | `args?` | `T` |
-| `options?` | [`CLISettings`](../interfaces/CLISettings.md) |
+| `options?` | [`CLISettings`](../interfaces/CLISettings.md)<`any`\> |
 
 ## Accessors
 
@@ -237,17 +237,24 @@ ___
 
 ### config
 
-▸ **config**(`options?`): [`Cli`](Cli.md)<`T`\>
+▸ **config**<`C`\>(`config?`, `defaultConfig?`): [`Cli`](Cli.md)<`T`\>
 
 Enable config file support for the CLI, and define searching options.
 
 **`see`** [https://github.com/antonk52/lilconfig](https://github.com/antonk52/lilconfig)
 
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | `any` |
+
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | ``false`` \| `Options` |
+| `config?` | ``false`` \| `Options` |
+| `defaultConfig?` | `C` |
 
 #### Returns
 
@@ -275,7 +282,7 @@ ___
 
 ### get
 
-▸ **get**<`O`\>(`option`): [`State`](../interfaces/State.md)<`T`\>[`O`]
+▸ **get**<`O`\>(`option`): [`State`](../interfaces/State.md)<`T`, `any`\>[`O`]
 
 Get the value of a configuration option for the CLI
 
@@ -283,7 +290,7 @@ Get the value of a configuration option for the CLI
 
 | Name | Type |
 | :------ | :------ |
-| `O` | extends keyof [`CLISettings`](../interfaces/CLISettings.md) |
+| `O` | extends keyof [`CLISettings`](../interfaces/CLISettings.md)<`any`\> |
 
 #### Parameters
 
@@ -293,7 +300,7 @@ Get the value of a configuration option for the CLI
 
 #### Returns
 
-[`State`](../interfaces/State.md)<`T`\>[`O`]
+[`State`](../interfaces/State.md)<`T`, `any`\>[`O`]
 
 ___
 
@@ -436,7 +443,7 @@ Set a configuration option for the CLI
 
 | Name | Type |
 | :------ | :------ |
-| `O` | extends keyof [`CLISettings`](../interfaces/CLISettings.md) |
+| `O` | extends keyof [`CLISettings`](../interfaces/CLISettings.md)<`any`\> |
 
 #### Parameters
 
@@ -457,7 +464,7 @@ Set configuration options for the CLI
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `options` | [`CLISettings`](../interfaces/CLISettings.md) | The options to set. These will be merged with the current options. |
+| `options` | [`CLISettings`](../interfaces/CLISettings.md)<`any`\> | The options to set. These will be merged with the current options. |
 
 #### Returns
 

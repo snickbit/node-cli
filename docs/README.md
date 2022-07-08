@@ -217,7 +217,7 @@ Simple Node.js CLI framework for creating command line applications.
 | Name | Type |
 | :------ | :------ |
 | `args?` | `T` |
-| `options?` | [`CLISettings`](interfaces/CLISettings.md) |
+| `options?` | [`CLISettings`](interfaces/CLISettings.md)<`any`\> |
 
 #### Returns
 
@@ -237,7 +237,7 @@ Simple Node.js CLI framework for creating command line applications.
 | :------ | :------ |
 | `name?` | `string` |
 | `args?` | `T` |
-| `options?` | [`CLISettings`](interfaces/CLISettings.md) |
+| `options?` | [`CLISettings`](interfaces/CLISettings.md)<`any`\> |
 
 #### Returns
 

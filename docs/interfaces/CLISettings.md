@@ -1,6 +1,12 @@
-# Interface: CLISettings
+# Interface: CLISettings<C\>
 
 Settings and State
+
+## Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `C` | `any` |
 
 ## Hierarchy
 
@@ -16,6 +22,7 @@ Settings and State
 - [banner](CLISettings.md#banner)
 - [config](CLISettings.md#config)
 - [cwd](CLISettings.md#cwd)
+- [default\_config](CLISettings.md#default_config)
 - [hide\_banner](CLISettings.md#hide_banner)
 - [include\_working\_package](CLISettings.md#include_working_package)
 - [name](CLISettings.md#name)
@@ -45,6 +52,12 @@ ___
 ### cwd
 
 • `Optional` **cwd**: `string`
+
+___
+
+### default\_config
+
+• **default\_config**: `C`
 
 ___
 
