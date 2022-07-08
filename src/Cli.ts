@@ -129,18 +129,18 @@ export class Cli<T extends ParsedArgs = any> {
 	/**
 	 * Enable config file support for the CLI, and define searching options.
 	 * @param [defaultConfig]
-	 * @param [config]
+	 * @param [options]
 	 * @see {@link https://github.com/antonk52/lilconfig}
 	 */
-	config(defaultConfig?: any, config?: ConfigOptions | false): this
-	config(defaultConfig: any, handler: ConfigHandler, config?: ConfigOptions | false): this
-	config(defaultConfig?: any, handlerOrConfig?: ConfigHandler | ConfigOptions | false, optionalConfig?: ConfigOptions | false): this {
+	config(defaultConfig?: any, options?: ConfigOptions | false): this
+	config(defaultConfig: any, handler: ConfigHandler, options?: ConfigOptions | false): this
+	config(defaultConfig?: any, handlerOrConfig?: ConfigHandler | ConfigOptions | false, optionalOptions?: ConfigOptions | false): this {
 		let config: ConfigOptions | false
 		let handler: ConfigHandler
 
-		if (optionalConfig !== void 0 || isCallable(handlerOrConfig)) {
+		if (optionalOptions !== void 0 || isCallable(handlerOrConfig)) {
 			handler = handlerOrConfig as ConfigHandler
-			config = optionalConfig
+			config = optionalOptions
 		} else {
 			config = handlerOrConfig as ConfigOptions | false
 		}
