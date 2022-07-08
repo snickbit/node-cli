@@ -132,9 +132,9 @@ export class Cli<T extends ParsedArgs = any> {
 	 * @param [config]
 	 * @see {@link https://github.com/antonk52/lilconfig}
 	 */
-	config<C = any>(defaultConfig?: C, config?: ConfigOptions | false): this
-	config<C = any>(defaultConfig: C, handler: ConfigHandler, config?: ConfigOptions | false): this
-	config<C = any>(defaultConfig?: C, handlerOrConfig?: ConfigHandler | ConfigOptions | false, optionalConfig?: ConfigOptions | false): this {
+	config(defaultConfig?: any, config?: ConfigOptions | false): this
+	config(defaultConfig: any, handler: ConfigHandler, config?: ConfigOptions | false): this
+	config(defaultConfig?: any, handlerOrConfig?: ConfigHandler | ConfigOptions | false, optionalConfig?: ConfigOptions | false): this {
 		let config: ConfigOptions | false
 		let handler: ConfigHandler
 
@@ -151,7 +151,7 @@ export class Cli<T extends ParsedArgs = any> {
 				...this.state,
 				config,
 				default_config: defaultConfig
-			} as State<T, C>
+			} as State<T>
 
 			if (handler) {
 				this._configHandler = handler
