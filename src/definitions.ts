@@ -100,7 +100,7 @@ export interface CLISettings<C = any> {
 	out?: Out
 	version?: number | string
 	config?: ConfigOptions
-	defaultConfig: C
+	default_config: C
 }
 
 export interface State<T extends ParsedArgs = any, C = any> extends CLISettings<C> {

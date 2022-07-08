@@ -8,7 +8,7 @@ export const cli_settings: CLISettings = {
 	hide_banner: true,
 	bail: false,
 	cwd: '../',
-	defaultConfig: {}
+	default_config: {}
 }
 
 export const parsed_args: ParsedArgs = {

@@ -137,7 +137,7 @@ export class Cli<T extends ParsedArgs = any> {
 			this.state = {
 				...this.state,
 				config,
-				defaultConfig
+				default_config: defaultConfig
 			} as State<T, C>
 
 			if (!this.state.options['config']) {
@@ -157,8 +157,8 @@ export class Cli<T extends ParsedArgs = any> {
 				delete this.state.options['config']
 			}
 
-			if (this.state.defaultConfig) {
-				delete this.state.defaultConfig
+			if (this.state.default_config) {
+				delete this.state.default_config
 			}
 		}
 
@@ -789,7 +789,7 @@ export class Cli<T extends ParsedArgs = any> {
 		this.#out.debug('Checking for config')
 
 		// Initialize config
-		let config: any = this.state.defaultConfig || {}
+		let config: any = this.state.default_config || {}
 
 		// Search for the file with options
 		if (this.state.config) {
