@@ -27,6 +27,7 @@ Simple Node.js CLI framework for creating command line applications.
 - [args](Cli.md#args)
 - [banner](Cli.md#banner)
 - [config](Cli.md#config)
+- [configHandler](Cli.md#confighandler)
 - [defaultAction](Cli.md#defaultaction)
 - [get](Cli.md#get)
 - [hideBanner](Cli.md#hidebanner)
@@ -60,7 +61,7 @@ Create a new Cli instance.
 | Name | Type |
 | :------ | :------ |
 | `args?` | `T` |
-| `options?` | [`CLISettings`](../interfaces/CLISettings.md)<`any`\> |
+| `options?` | [`CLISettings`](../interfaces/CLISettings.md) |
 
 • **new Cli**<`T`\>(`name?`, `args?`, `options?`)
 
@@ -76,7 +77,7 @@ Create a new Cli instance.
 | :------ | :------ |
 | `name?` | `string` |
 | `args?` | `T` |
-| `options?` | [`CLISettings`](../interfaces/CLISettings.md)<`any`\> |
+| `options?` | [`CLISettings`](../interfaces/CLISettings.md) |
 
 ## Accessors
 
@@ -237,28 +238,52 @@ ___
 
 ### config
 
-▸ **config**<`C`\>(`config?`, `defaultConfig?`): [`Cli`](Cli.md)<`T`\>
+▸ **config**(`defaultConfig?`, `options?`): [`Cli`](Cli.md)<`T`\>
 
 Enable config file support for the CLI, and define searching options.
 
 **`see`** [https://github.com/antonk52/lilconfig](https://github.com/antonk52/lilconfig)
 
-#### Type parameters
+#### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `C` | `any` |
+| `defaultConfig?` | `any` |
+| `options?` | ``false`` \| `Options` |
+
+#### Returns
+
+[`Cli`](Cli.md)<`T`\>
+
+▸ **config**(`defaultConfig`, `handler`, `options?`): [`Cli`](Cli.md)<`T`\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `config?` | ``false`` \| `Options` |
-| `defaultConfig?` | `C` |
+| `defaultConfig` | `any` |
+| `handler` | [`ConfigHandler`](../README.md#confighandler) |
+| `options?` | ``false`` \| `Options` |
 
 #### Returns
 
 [`Cli`](Cli.md)<`T`\>
+
+___
+
+### configHandler
+
+▸ **configHandler**(`handler`): `void`
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `handler` | [`ConfigHandler`](../README.md#confighandler) |
+
+#### Returns
+
+`void`
 
 ___
 
@@ -282,7 +307,7 @@ ___
 
 ### get
 
-▸ **get**<`O`\>(`option`): [`State`](../interfaces/State.md)<`T`, `any`\>[`O`]
+▸ **get**<`O`\>(`option`): [`State`](../interfaces/State.md)<`T`\>[`O`]
 
 Get the value of a configuration option for the CLI
 
@@ -290,7 +315,7 @@ Get the value of a configuration option for the CLI
 
 | Name | Type |
 | :------ | :------ |
-| `O` | extends keyof [`CLISettings`](../interfaces/CLISettings.md)<`any`\> |
+| `O` | extends keyof [`CLISettings`](../interfaces/CLISettings.md) |
 
 #### Parameters
 
@@ -300,7 +325,7 @@ Get the value of a configuration option for the CLI
 
 #### Returns
 
-[`State`](../interfaces/State.md)<`T`, `any`\>[`O`]
+[`State`](../interfaces/State.md)<`T`\>[`O`]
 
 ___
 
@@ -443,7 +468,7 @@ Set a configuration option for the CLI
 
 | Name | Type |
 | :------ | :------ |
-| `O` | extends keyof [`CLISettings`](../interfaces/CLISettings.md)<`any`\> |
+| `O` | extends keyof [`CLISettings`](../interfaces/CLISettings.md) |
 
 #### Parameters
 
@@ -464,7 +489,7 @@ Set configuration options for the CLI
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `options` | [`CLISettings`](../interfaces/CLISettings.md)<`any`\> | The options to set. These will be merged with the current options. |
+| `options` | [`CLISettings`](../interfaces/CLISettings.md) | The options to set. These will be merged with the current options. |
 
 #### Returns
 

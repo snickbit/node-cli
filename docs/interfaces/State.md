@@ -1,15 +1,14 @@
-# Interface: State<T, C\>
+# Interface: State<T\>
 
 ## Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `T` | extends [`ParsedArgs`](ParsedArgs.md) = `any` |
-| `C` | `any` |
 
 ## Hierarchy
 
-- [`CLISettings`](CLISettings.md)<`C`\>
+- [`CLISettings`](CLISettings.md)
 
   ↳ **`State`**
 
@@ -102,7 +101,7 @@ ___
 
 ### default\_config
 
-• **default\_config**: `C`
+• **default\_config**: `any`
 
 #### Inherited from
 

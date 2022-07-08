@@ -32,6 +32,7 @@
 - [Args](README.md#args)
 - [CliOption](README.md#clioption)
 - [CliOptions](README.md#clioptions)
+- [ConfigHandler](README.md#confighandler)
 - [OptionDefault](README.md#optiondefault)
 - [OptionType](README.md#optiontype)
 - [Options](README.md#options)
@@ -119,6 +120,26 @@ ___
 ### CliOptions
 
 Ƭ **CliOptions**: `Options` & `Record`<`string`, `any`\>
+
+___
+
+### ConfigHandler
+
+Ƭ **ConfigHandler**: (`config`: `any`) => `Promise`<`any`\> \| `any`
+
+#### Type declaration
+
+▸ (`config`): `Promise`<`any`\> \| `any`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `config` | `any` |
+
+##### Returns
+
+`Promise`<`any`\> \| `any`
 
 ___
 
@@ -217,7 +238,7 @@ Simple Node.js CLI framework for creating command line applications.
 | Name | Type |
 | :------ | :------ |
 | `args?` | `T` |
-| `options?` | [`CLISettings`](interfaces/CLISettings.md)<`any`\> |
+| `options?` | [`CLISettings`](interfaces/CLISettings.md) |
 
 #### Returns
 
@@ -237,7 +258,7 @@ Simple Node.js CLI framework for creating command line applications.
 | :------ | :------ |
 | `name?` | `string` |
 | `args?` | `T` |
-| `options?` | [`CLISettings`](interfaces/CLISettings.md)<`any`\> |
+| `options?` | [`CLISettings`](interfaces/CLISettings.md) |
 
 #### Returns
 

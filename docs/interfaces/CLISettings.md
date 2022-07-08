@@ -1,12 +1,6 @@
-# Interface: CLISettings<C\>
+# Interface: CLISettings
 
 Settings and State
-
-## Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `C` | `any` |
 
 ## Hierarchy
 
@@ -57,7 +51,7 @@ ___
 
 ### default\_config
 
-• **default\_config**: `C`
+• **default\_config**: `any`
 
 ___
 
