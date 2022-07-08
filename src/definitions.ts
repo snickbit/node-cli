@@ -111,3 +111,5 @@ export interface State<T extends ParsedArgs = any, C = any> extends CLISettings<
 	options: Partial<Options>
 	parsed: T
 }
+
+export type ConfigHandler = <C = any>(config: C) => C | Promise<C>

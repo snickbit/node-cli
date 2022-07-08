@@ -1,7 +1,7 @@
 import {fileExists, findUp, getFileJson, parseImports} from '@snickbit/node-utilities'
 import {Out} from '@snickbit/out'
-import {arrayWrap, camelCase, isArray, isEmpty, isNumber, kebabCase, objectClone, objectFindKey, parseOptions, typeOf} from '@snickbit/utilities'
-import {Action, ActionDefinition, Actions, Arg, Args, CLISettings, Option, Options, ParsedArgs, RawActions, State} from './definitions'
+import {arrayWrap, camelCase, isArray, isCallable, isEmpty, isNumber, kebabCase, objectClone, objectFindKey, parseOptions, typeOf} from '@snickbit/utilities'
+import {Action, ActionDefinition, Actions, Arg, Args, CLISettings, ConfigHandler, Option, Options, ParsedArgs, RawActions, State} from './definitions'
 import {allowed_keys, default_state, loadedConfig} from './config'
 import {chunkArguments, CliOption, CliOptions, default_options, extra_options, formatValue, helpOut, hideBin, object_options, option_not_predicate, options_equal_predicate, parseDelimited, printLine, space} from './helpers'
 import {lilconfig, LilconfigResult, Options as ConfigOptions} from 'lilconfig'
@@ -17,6 +17,7 @@ export class Cli<T extends ParsedArgs = any> {
 	protected asAction = false
 	protected state: State<T>
 	protected hasRun = false
+	protected _configHandler?: ConfigHandler
 	private static _instance: Cli
 
 	/**
@@ -131,7 +132,19 @@ export class Cli<T extends ParsedArgs = any> {
 	 * @param [config]
 	 * @see {@link https://github.com/antonk52/lilconfig}
 	 */
-	config<C = any>(defaultConfig?: C, config?: ConfigOptions | false): this {
+	config<C = any>(defaultConfig?: C, config?: ConfigOptions | false): this
+	config<C = any>(defaultConfig: C, handler: ConfigHandler, config?: ConfigOptions | false): this
+	config<C = any>(defaultConfig?: C, handlerOrConfig?: ConfigHandler | ConfigOptions | false, optionalConfig?: ConfigOptions | false): this {
+		let config: ConfigOptions | false
+		let handler: ConfigHandler
+
+		if (optionalConfig !== void 0 || isCallable(handlerOrConfig)) {
+			handler = handlerOrConfig as ConfigHandler
+			config = optionalConfig
+		} else {
+			config = handlerOrConfig as ConfigOptions | false
+		}
+
 		if (config !== false) {
 			config = config || {}
 			this.state = {
@@ -139,6 +152,10 @@ export class Cli<T extends ParsedArgs = any> {
 				config,
 				default_config: defaultConfig
 			} as State<T, C>
+
+			if (handler) {
+				this._configHandler = handler
+			}
 
 			if (!this.state.options['config']) {
 				this.option('config', 		{
@@ -163,6 +180,10 @@ export class Cli<T extends ParsedArgs = any> {
 		}
 
 		return this
+	}
+
+	configHandler(handler: ConfigHandler) {
+		this._configHandler = handler
 	}
 
 	/**
@@ -829,6 +850,15 @@ export class Cli<T extends ParsedArgs = any> {
 		for (const key of Object.keys(args)) {
 			if (key in config && args[key] !== undefined) {
 				config[key] = args[key]
+			}
+		}
+
+		if (this._configHandler) {
+			this.#out.debug('Running config handler')
+			try {
+				config = await Promise.resolve(this._configHandler(config))
+			} catch (e) {
+				this.#out.fatal('Config handler failed', e)
 			}
 		}
 
