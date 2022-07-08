@@ -1,5 +1,12 @@
 # @snickbit/node-cli
 
+## 2.0.2
+
+### Patch Changes
+
+- [9c1fc09](https://github.com/snickbit/node-cli/commit/9c1fc09) **test**:  move mock
+- [19634db](https://github.com/snickbit/node-cli/commit/19634db) **test**:  refactor tests
+
 ## 2.0.1
 
 ### Patch Changes
