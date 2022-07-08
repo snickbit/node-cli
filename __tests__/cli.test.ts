@@ -1,5 +1,5 @@
 import {Cli, CLISettings} from '../src'
-import {cli_settings, parsed_args} from './mocks'
+import {cli_settings, parsed_args} from '../__mocks__/data'
 
 describe('Cli', () => {
 	it('Cli should be instance of function', () => expect(Cli).toBeInstanceOf(Function))
