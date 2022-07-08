@@ -7,13 +7,12 @@ export const cli_settings: CLISettings = {
 	include_working_package: true,
 	hide_banner: true,
 	bail: false,
-	cwd: '../'
+	cwd: '../',
+	defaultConfig: {}
 }
 
 export const parsed_args: ParsedArgs = {
-	_: [
-		'app',
-	],
+	_: ['app'],
 	__: [
 		'build',
 		'-v',
