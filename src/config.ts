@@ -21,6 +21,7 @@ export const default_state: State = {
 	cwd: process.cwd(),
 	argv: null,
 	parsed: {},
+	defaultConfig: {},
 
 	args: {},
 

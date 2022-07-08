@@ -127,13 +127,18 @@ export class Cli<T extends ParsedArgs = any> {
 
 	/**
 	 * Enable config file support for the CLI, and define searching options.
-	 * @param [options]
+	 * @param [config]
+	 * @param [defaultConfig]
 	 * @see {@link https://github.com/antonk52/lilconfig}
 	 */
-	config(options?: ConfigOptions | false): this {
-		if (options !== false) {
-			options = options || {}
-			this.state.config = options
+	config<C = any>(config?: ConfigOptions | false, defaultConfig?: C): this {
+		if (config !== false) {
+			config = config || {}
+			this.state = {
+				...this.state,
+				config,
+				defaultConfig
+			} as State<T, C>
 
 			if (!this.state.options['config']) {
 				this.option('config', 		{
@@ -150,6 +155,10 @@ export class Cli<T extends ParsedArgs = any> {
 
 			if (this.state.options['config'] && this.state.options['config'].preset) {
 				delete this.state.options['config']
+			}
+
+			if (this.state.defaultConfig) {
+				delete this.state.defaultConfig
 			}
 		}
 
@@ -780,7 +789,7 @@ export class Cli<T extends ParsedArgs = any> {
 		this.#out.debug('Checking for config')
 
 		// Initialize config
-		let config: any = {}
+		let config: any = this.state.defaultConfig || {}
 
 		// Search for the file with options
 		if (this.state.config) {
@@ -804,16 +813,15 @@ export class Cli<T extends ParsedArgs = any> {
 
 			// If we found a config file, load it
 			if (result) {
-				config = result.config
+				config = {...config, ...result.config}
 			} else {
 				this.$out.warn('No config file found.')
 			}
 		} else if (this.asAction) {
 			this.#out.debug('Checking for previously loaded config file')
-			config = loadedConfig() || {}
+			config = {...config, ...loadedConfig() || {}}
 		} else {
 			this.#out.warn('No config found.', `asAction: ${this.asAction}`)
-			return {}
 		}
 
 		// Override config with args

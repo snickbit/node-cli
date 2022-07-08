@@ -90,7 +90,7 @@ export type RawActions<T extends ParsedArgs = any> = Actions | ImportRecords<T> 
 
 /** Settings and State **/
 
-export interface CLISettings {
+export interface CLISettings<C = any> {
 	bail?: boolean
 	banner?: string
 	cwd?: string
@@ -100,9 +100,10 @@ export interface CLISettings {
 	out?: Out
 	version?: number | string
 	config?: ConfigOptions
+	defaultConfig: C
 }
 
-export interface State<T extends ParsedArgs = any> extends CLISettings {
+export interface State<T extends ParsedArgs = any, C = any> extends CLISettings<C> {
 	action?: string
 	actions: Partial<Actions>
 	args: Partial<Args>
