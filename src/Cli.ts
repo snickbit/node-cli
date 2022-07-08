@@ -127,11 +127,11 @@ export class Cli<T extends ParsedArgs = any> {
 
 	/**
 	 * Enable config file support for the CLI, and define searching options.
-	 * @param [config]
 	 * @param [defaultConfig]
+	 * @param [config]
 	 * @see {@link https://github.com/antonk52/lilconfig}
 	 */
-	config<C = any>(config?: ConfigOptions | false, defaultConfig?: C): this {
+	config<C = any>(defaultConfig?: C, config?: ConfigOptions | false): this {
 		if (config !== false) {
 			config = config || {}
 			this.state = {
