@@ -1,5 +1,20 @@
 # @snickbit/node-cli
 
+## 3.0.0
+
+### Major Changes
+
+- [1c67620](https://github.com/snickbit/node-cli/commit/1c67620) **docs**:  update
+- [a1d5230](https://github.com/snickbit/node-cli/commit/a1d5230) **fix**:  rename config param "config" to "options" to reduce confusion
+- [78ed057](https://github.com/snickbit/node-cli/commit/78ed057) **fix**:  loosen types for config
+- [6bb3810](https://github.com/snickbit/node-cli/commit/6bb3810) **feat**:  add optional config handler to manipulate the config before handing off to actions/run
+- [551e23c](https://github.com/snickbit/node-cli/commit/551e23c) **feat**:  swap default config and config options
+- [73a95f1](https://github.com/snickbit/node-cli/commit/73a95f1) **docs**:  update
+- [0812ac2](https://github.com/snickbit/node-cli/commit/0812ac2) **fix**:  add default_config to allowed_keys
+- [3bd4a6b](https://github.com/snickbit/node-cli/commit/3bd4a6b) **refactor**:  rename defaultConfig to default_config to maintain naming convention
+- [7ab111e](https://github.com/snickbit/node-cli/commit/7ab111e) **test**:  add defaultConfig to mock data
+- [dabeba5](https://github.com/snickbit/node-cli/commit/dabeba5) **feat**:  add default config, merge with provided
+
 ## 2.0.2
 
 ### Patch Changes
