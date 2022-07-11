@@ -424,7 +424,7 @@ export class Cli<T extends ParsedArgs = any> {
 	 * Add new actions. Will override existing.
 	 */
 	actions(actions: RawActions): this {
-		const parsed: Actions = parseImports(actions as any)
+		const parsed: Actions = parseImports<Action>(actions)
 		for (const index in parsed) {
 			this.addAction(parsed[index])
 		}

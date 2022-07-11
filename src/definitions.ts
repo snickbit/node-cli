@@ -1,4 +1,4 @@
-import {ImportMethod, ImportRecords, ParsedImport, RecordOfImportRecords} from '@snickbit/node-utilities'
+import {ParsedImport, ParsedImportRecords, RawImports, UnparsedImport} from '@snickbit/node-utilities'
 import {Out} from '@snickbit/out'
 import {Options as ConfigOptions} from 'lilconfig'
 
@@ -58,35 +58,15 @@ export type Options = Record<string, Partial<Option>>
 
 /** Actions **/
 
-interface ActionBase {
-	key?: string
-	name?: string
-	alias?: string
-	aliases?: string[]
-	describe?: string
-	description?: string
-}
-
-export type ActionFunction<T extends ParsedArgs = any> = ((args: T) => Promise<any> | any) | {default: ActionFunction<T>}
-
-export interface Action<T extends ParsedArgs = any> extends ActionBase {
+export interface Action<T extends ParsedArgs = any> extends UnparsedImport {
 	(args: T, config: any): any
 }
-
-export interface ImportedAction<T extends ParsedArgs = any> extends ActionBase {
+export interface ImportedAction<T extends ParsedArgs = any> extends UnparsedImport<Action<T>> {
 	readonly default: Action<T>
 }
-
-export interface ActionDefinition<T extends ParsedArgs = any> extends ParsedImport {
-	name: string
-	aliases: string[]
-	description?: string
-	handler: ImportMethod<T>
-}
-
-export type Actions<T extends ParsedArgs = any> = Record<string, | ActionDefinition<T>>
-
-export type RawActions<T extends ParsedArgs = any> = Actions | ImportRecords<T> | RecordOfImportRecords<T> | any
+export type ActionDefinition = ParsedImport
+export type Actions = ParsedImportRecords
+export type RawActions = RawImports
 
 /** Settings and State **/
 
