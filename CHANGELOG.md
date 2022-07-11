@@ -1,5 +1,13 @@
 # @snickbit/node-cli
 
+## 3.0.1
+
+### Patch Changes
+
+- [fc8776d](https://github.com/snickbit/node-cli/commit/fc8776d) **chore**:  bump dependencies
+- [444396d](https://github.com/snickbit/node-cli/commit/444396d) **docs**:  update
+- [b45ce79](https://github.com/snickbit/node-cli/commit/b45ce79) **fix**:  simplify types by aliasing matching ones
+
 ## 3.0.0
 
 ### Major Changes
