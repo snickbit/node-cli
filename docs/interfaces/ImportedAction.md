@@ -8,7 +8,7 @@
 
 ## Hierarchy
 
-- `ActionBase`
+- `UnparsedImport`<[`Action`](Action.md)<`T`\>\>
 
   ↳ **`ImportedAction`**
 
@@ -21,8 +21,10 @@
 - [default](ImportedAction.md#default)
 - [describe](ImportedAction.md#describe)
 - [description](ImportedAction.md#description)
-- [key](ImportedAction.md#key)
+- [handler](ImportedAction.md#handler)
+- [method](ImportedAction.md#method)
 - [name](ImportedAction.md#name)
+- [run](ImportedAction.md#run)
 
 ## Properties
 
@@ -32,7 +34,7 @@
 
 #### Inherited from
 
-ActionBase.alias
+UnparsedImport.alias
 
 ___
 
@@ -42,13 +44,17 @@ ___
 
 #### Inherited from
 
-ActionBase.aliases
+UnparsedImport.aliases
 
 ___
 
 ### default
 
 • `Readonly` **default**: [`Action`](Action.md)<`T`\>
+
+#### Overrides
+
+UnparsedImport.default
 
 ___
 
@@ -58,7 +64,7 @@ ___
 
 #### Inherited from
 
-ActionBase.describe
+UnparsedImport.describe
 
 ___
 
@@ -68,17 +74,27 @@ ___
 
 #### Inherited from
 
-ActionBase.description
+UnparsedImport.description
 
 ___
 
-### key
+### handler
 
-• `Optional` **key**: `string`
+• `Optional` **handler**: [`Action`](Action.md)<`T`\>
 
 #### Inherited from
 
-ActionBase.key
+UnparsedImport.handler
+
+___
+
+### method
+
+• `Optional` **method**: [`Action`](Action.md)<`T`\>
+
+#### Inherited from
+
+UnparsedImport.method
 
 ___
 
@@ -88,4 +104,14 @@ ___
 
 #### Inherited from
 
-ActionBase.name
+UnparsedImport.name
+
+___
+
+### run
+
+• `Optional` **run**: [`Action`](Action.md)<`T`\>
+
+#### Inherited from
+
+UnparsedImport.run

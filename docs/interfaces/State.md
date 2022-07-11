@@ -43,7 +43,7 @@ ___
 
 ### actions
 
-• **actions**: `Partial`<[`Actions`](../README.md#actions)<`any`\>\>
+• **actions**: `Partial`<[`Actions`](../README.md#actions)\>
 
 ___
 

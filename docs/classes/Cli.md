@@ -115,7 +115,7 @@ Add a new action
 
 | Name | Type |
 | :------ | :------ |
-| `action` | [`ActionDefinition`](../interfaces/ActionDefinition.md)<`any`\> |
+| `action` | [`ActionDefinition`](../README.md#actiondefinition) |
 
 #### Returns
 

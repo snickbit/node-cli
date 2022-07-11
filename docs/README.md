@@ -13,7 +13,6 @@
 ### Interfaces
 
 - [Action](interfaces/Action.md)
-- [ActionDefinition](interfaces/ActionDefinition.md)
 - [Arg](interfaces/Arg.md)
 - [ArgChoice](interfaces/ArgChoice.md)
 - [CLISettings](interfaces/CLISettings.md)
@@ -24,7 +23,7 @@
 
 ### Type Aliases
 
-- [ActionFunction](README.md#actionfunction)
+- [ActionDefinition](README.md#actiondefinition)
 - [Actions](README.md#actions)
 - [ArgDefault](README.md#argdefault)
 - [ArgType](README.md#argtype)
@@ -61,27 +60,15 @@ Renames and re-exports [cli](README.md#cli)
 
 ## Type Aliases
 
-### ActionFunction
+### ActionDefinition
 
-Ƭ **ActionFunction**<`T`\>: (`args`: `T`) => `Promise`<`any`\> \| `any` \| { `default`: [`ActionFunction`](README.md#actionfunction)<`T`\>  }
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | extends [`ParsedArgs`](interfaces/ParsedArgs.md) = `any` |
+Ƭ **ActionDefinition**: `ParsedImport`
 
 ___
 
 ### Actions
 
-Ƭ **Actions**<`T`\>: `Record`<`string`, [`ActionDefinition`](interfaces/ActionDefinition.md)<`T`\>\>
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | extends [`ParsedArgs`](interfaces/ParsedArgs.md) = `any` |
+Ƭ **Actions**: `ParsedImportRecords`
 
 ___
 
@@ -163,13 +150,7 @@ ___
 
 ### RawActions
 
-Ƭ **RawActions**<`T`\>: [`Actions`](README.md#actions) \| `ImportRecords`<`T`\> \| `RecordOfImportRecords`<`T`\> \| `any`
-
-#### Type parameters
-
-| Name | Type |
-| :------ | :------ |
-| `T` | extends [`ParsedArgs`](interfaces/ParsedArgs.md) = `any` |
+Ƭ **RawActions**: `RawImports`
 
 ## Variables
 

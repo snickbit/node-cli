@@ -8,7 +8,7 @@
 
 ## Hierarchy
 
-- `ActionBase`
+- `UnparsedImport`
 
   ↳ **`Action`**
 
@@ -17,6 +17,8 @@
 ### Action
 
 ▸ **Action**(`args`, `config`): `any`
+
+Actions
 
 #### Parameters
 
@@ -35,10 +37,13 @@
 
 - [alias](Action.md#alias)
 - [aliases](Action.md#aliases)
+- [default](Action.md#default)
 - [describe](Action.md#describe)
 - [description](Action.md#description)
-- [key](Action.md#key)
+- [handler](Action.md#handler)
+- [method](Action.md#method)
 - [name](Action.md#name)
+- [run](Action.md#run)
 
 ## Properties
 
@@ -48,7 +53,7 @@
 
 #### Inherited from
 
-ActionBase.alias
+UnparsedImport.alias
 
 ___
 
@@ -58,7 +63,17 @@ ___
 
 #### Inherited from
 
-ActionBase.aliases
+UnparsedImport.aliases
+
+___
+
+### default
+
+• `Optional` **default**: `ImportMethod`<`any`, `any`\>
+
+#### Inherited from
+
+UnparsedImport.default
 
 ___
 
@@ -68,7 +83,7 @@ ___
 
 #### Inherited from
 
-ActionBase.describe
+UnparsedImport.describe
 
 ___
 
@@ -78,17 +93,27 @@ ___
 
 #### Inherited from
 
-ActionBase.description
+UnparsedImport.description
 
 ___
 
-### key
+### handler
 
-• `Optional` **key**: `string`
+• `Optional` **handler**: `ImportMethod`<`any`, `any`\>
 
 #### Inherited from
 
-ActionBase.key
+UnparsedImport.handler
+
+___
+
+### method
+
+• `Optional` **method**: `ImportMethod`<`any`, `any`\>
+
+#### Inherited from
+
+UnparsedImport.method
 
 ___
 
@@ -98,4 +123,14 @@ ___
 
 #### Inherited from
 
-ActionBase.name
+UnparsedImport.name
+
+___
+
+### run
+
+• `Optional` **run**: `ImportMethod`<`any`, `any`\>
+
+#### Inherited from
+
+UnparsedImport.run
