@@ -1,5 +1,11 @@
 # @snickbit/node-cli
 
+## 3.0.3
+
+### Patch Changes
+
+- [fbc52e6](https://github.com/snickbit/node-cli/commit/fbc52e6) **fix**:  add more default config file options
+
 ## 3.0.1
 
 ### Patch Changes
