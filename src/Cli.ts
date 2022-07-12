@@ -149,7 +149,19 @@ export class Cli<T extends ParsedArgs = any> {
 			config = config || {}
 			this.state = {
 				...this.state,
-				config,
+				config: {
+					searchPlaces: [
+						'package.json',
+						`.${this.$name}rc.json`,
+						`.${this.$name}rc.js`,
+						`${this.$name}.json`,
+						`${this.$name}.config.json`,
+						`${this.$name}.config.js`,
+						`.${this.$name}rc.cjs`,
+						`${this.$name}.config.cjs`
+					],
+					...config
+				},
 				default_config: defaultConfig
 			} as State<T>
 
@@ -814,7 +826,8 @@ export class Cli<T extends ParsedArgs = any> {
 
 		// Search for the file with options
 		if (this.state.config) {
-			this.#out.debug('Searching for config file')
+			this.#out.debug(`Searching for config file matching ${this.$name}`)
+			this.#out.verbose('Searching for config file:', this.state.config, 'starting in directory:', process.cwd())
 
 			// initialize lilconfig
 			const finder = lilconfig(this.$name, this.state.config)
@@ -827,9 +840,12 @@ export class Cli<T extends ParsedArgs = any> {
 					this.$out.fatal(`Config file ${args.config} does not exist`)
 				}
 
+				this.#out.debug('Loading config file from config argument')
 				result = await finder.load(args.config)
 			} else {
+				this.#out.debug('Searching for config file')
 				result = await finder.search()
+				this.#out.verbose('Config file search results', result)
 			}
 
 			// If we found a config file, load it
